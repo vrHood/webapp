@@ -1,11 +1,46 @@
 # vr*Hood Web App
 
-## Docker
+## Getting started
 
-Run in project root:
+### Requirements:
 
+- Node 12.16.*
+- Docker Desktop
+
+### Installation
+
+**Backend**
+```
+cd backend
+npm i
+```
+
+**Frontend**
+```
+cd frontend
+npm i
+```
+
+**Types**
+```
+cd types
+npm i
+```
+
+### Running the application
+
+**Database & API**
+
+*Run in project root*
 ```
 docker-compose up --build -d
+```
+
+**Frontend**
+
+*Run in `frontend/`*
+```
+ng serve
 ```
 
 ## API
