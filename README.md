@@ -22,7 +22,7 @@ Content-Type: application/json
 BODY:
 ```
 {
-	"strategy": "local",
+    "strategy": "local",
     "email": "...",
     "password": "..."
 }
