@@ -42,6 +42,7 @@ node_modules
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+.history/*
 
 ### Linux ###
 *~
@@ -107,6 +108,29 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# Others
-backend/lib/
-backend/data/
+# Backend
+/backend/lib/
+/backend/data/
+
+# Frontend
+
+## compiled output
+/frontend/dist
+/frontend/tmp
+/frontend/out-tsc
+## Only exists if Bazel was run
+/frontend/bazel-out
+
+## profiling files
+chrome-profiler-events*.json
+speed-measure-plugin*.json
+
+## misc
+/frontend/.sass-cache
+/frontend/connect.lock
+/frontend/coverage
+/frontend/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/frontend/typings
