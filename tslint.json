@@ -83,7 +83,7 @@
         "no-constant-condition": true,
         "no-duplicate-case": true,
         "no-duplicate-imports": true,
-        "no-empty": true,
+        "no-empty": false,
         "no-empty-interface": true,
         "no-extra-semi": true,
         "no-namespace": false,
