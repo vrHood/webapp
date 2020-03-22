@@ -1,4 +1,3 @@
 {
-  "host": "backend-app.feathersjs.com",
-  "port": "PORT"
+    "host": "backend2-app.feathersjs.com"
 }

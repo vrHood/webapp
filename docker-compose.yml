@@ -1,0 +1,35 @@
+version: '3'
+services:
+    db:
+        image: mongo:4.2
+        container_name: vrhood_webapp_db
+        network_mode: "bridge"
+        volumes:
+            - $HOME/vrhood/webapp/mongo:/data/db
+        ports:
+            - 27017:27017
+
+    backend:
+        build: ./backend
+        container_name: vrhood_webapp_backend
+        network_mode: "bridge"
+        restart: always
+        volumes:
+            - $HOME/vrhood/webapp/uploads:/data/uploads
+            - .:/app
+        command: npm start
+        depends_on:
+            - db
+        links:
+            - db
+        ports:
+            - 3030:3030
+        environment:
+            # node
+            NODE_ENV: development
+            # feathers
+            HOST: localhost
+            PORT: 3030
+            # general
+            BACKEND_HOST: http://localhost:3030
+            FRONTEND_HOST: http://localhost:4200
