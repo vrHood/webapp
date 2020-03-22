@@ -1,12 +1,42 @@
 {
-  "name": "types",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+    "name": "@vrhood/types",
+    "version": "0.0.0",
+    "homepage": "vrhood.de",
+    "private": true,
+    "keywords": [
+        "wirvsvirus",
+        "vrhood",
+        "typescript"
+    ],
+    "author": {
+        "name": "vr*Hood",
+        "email": "info@vrhood.de"
+    },
+    "contributors": [
+        {
+            "name": "Sebastian Homeier",
+            "email": "s.homeier@bynary.io"
+        },
+        {
+            "name": "Johannes Homeier",
+            "email": "j.homeier@bynary.io"
+        },
+        {
+            "name": "Michael Stahl"
+        },
+        {
+            "name": "Jakob Niggel"
+        }
+    ],
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "tslint -p .",
+        "lintfix": "tslint -p . --fix"
+    },
+    "devDependencies": {
+        "tslint": "^6.1.0",
+        "tslint-eslint-rules": "^5.4.0",
+        "typescript": "^3.8.3"
+    }
 }
