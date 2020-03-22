@@ -1,0 +1,40 @@
+{
+  "name": "backend",
+  "description": "API for vr*Hood Web App",
+  "version": "0.0.0",
+  "homepage": "",
+  "private": true,
+  "main": "src",
+  "keywords": [
+    "feathers"
+  ],
+  "author": {
+    "name": "Sebastian Homeier",
+    "email": "s.homeier@bynary.io"
+  },
+  "contributors": [],
+  "bugs": {},
+  "directories": {
+    "lib": "src",
+    "test": "test/",
+    "config": "config/"
+  },
+  "engines": {
+    "node": "^12.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "scripts": {
+    "test": "npm run compile && npm run mocha",
+    "dev": "ts-node-dev --no-notify src/",
+    "start": "npm run compile && node lib/",
+    "mocha": "ts-mocha \"test/**/*.ts\" --recursive --exit",
+    "compile": "shx rm -rf lib/ && tsc"
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ],
+    "ignore": []
+  },
+  "types": "lib/"
+}
