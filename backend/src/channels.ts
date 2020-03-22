@@ -1,6 +1,5 @@
 import { HookContext } from '@feathersjs/feathers';
 import '@feathersjs/transport-commons';
-
 import { Application } from './declarations';
 
 export default function (app: Application) {
@@ -63,4 +62,4 @@ export default function (app: Application) {
     //     app.channel(`emails/${data.recipientEmail}`)
     //   ];
     // });
-}
+};

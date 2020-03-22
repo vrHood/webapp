@@ -1,16 +1,8 @@
-import { MongoDBServiceOptions, Service } from 'feathers-mongodb';
-import { Db } from 'mongodb';
-
+import { MongooseServiceOptions, Service } from 'feathers-mongoose';
 import { Application } from '../../declarations';
 
 export class Users extends Service {
-    constructor(options: Partial<MongoDBServiceOptions>, app: Application) {
+    constructor(options: Partial<MongooseServiceOptions>, app: Application) {
         super(options);
-
-        const client: Promise<Db> = app.get('mongoClient');
-
-        client.then(db => {
-            this.Model = db.collection('users');
-        });
     }
 }

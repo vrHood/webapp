@@ -6,12 +6,12 @@ import { ServiceAddons } from '@feathersjs/feathers';
 import { Application } from './declarations';
 
 declare module './declarations' {
-  interface ServiceTypes {
-      'authentication': AuthenticationService & ServiceAddons<any>;
-  }
+    interface ServiceTypes {
+        'authentication': AuthenticationService & ServiceAddons<any>;
+    }
 }
 
-export default function(app: Application) {
+export default function (app: Application) {
     const authentication = new AuthenticationService(app);
 
     authentication.register('jwt', new JWTStrategy());
