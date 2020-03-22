@@ -106,3 +106,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Others
+backend/lib/
+backend/data/
