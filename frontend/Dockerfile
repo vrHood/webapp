@@ -1,5 +1,5 @@
 # STAGE 1: build
-FROM node:erbium as node
+FROM node:erbium-slim as node
 
 # change working directory
 WORKDIR /usr/src/app

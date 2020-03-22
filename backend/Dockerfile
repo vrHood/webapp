@@ -1,4 +1,4 @@
-FROM node:erbium
+FROM node:erbium-slim
 
 # change working directory
 WORKDIR /usr/src/app
