@@ -3,7 +3,6 @@ services:
     db:
         image: mongo:4.2
         container_name: vrhood_webapp_db
-        network_mode: "bridge"
         volumes:
             - $HOME/vrhood/webapp/mongo:/data/db
         ports:
@@ -12,15 +11,12 @@ services:
     backend:
         build: ./backend
         container_name: vrhood_webapp_backend
-        network_mode: "bridge"
         restart: always
         volumes:
             - $HOME/vrhood/webapp/uploads:/data/uploads
             - .:/app
         command: npm start
         depends_on:
-            - db
-        links:
             - db
         ports:
             - 3030:3030
