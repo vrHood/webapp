@@ -1,0 +1,30 @@
+app-content-page {
+    display: block;
+}
+
+.app-content-page {
+    height: 100%;
+    width: 100%;
+
+    > mat-sidenav-container {
+        height: 100%;
+
+        .app-content-page__retailer {
+
+        }
+
+        .app-content-page__map {
+            height: 100%;
+            width: 100%;
+        }
+
+        .app-content-page__categories {
+            height: 100%;
+            width: 300px;
+        }
+    }
+
+    div {
+        border: 1px solid black;
+    }
+}
