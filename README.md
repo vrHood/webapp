@@ -43,8 +43,10 @@ docker-compose up --build -d
 ng serve
 ```
 
-**OR start complete stack via docker**
+**OR start complete stack via docker-compose**
+```
 docker-compose -f docker-compose-dev.yml up
+```
 
 ## API
 
