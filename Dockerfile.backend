@@ -4,7 +4,7 @@ FROM node:erbium-slim
 WORKDIR /usr/src/app
 
 # copy package.json & package-lock.json (if available)
-COPY package*.json ./
+COPY backend/package*.json ./
 
 RUN npm install -g typescript
 
@@ -14,7 +14,7 @@ RUN tsc -v
 RUN npm install
 
 # copy app
-COPY . .
+COPY backend/. .
 
 RUN npm run build
 

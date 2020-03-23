@@ -1,8 +1,9 @@
-version: "3.7"
+version: '3'
 services:
     db:
         image: mongo:4.2
         container_name: vrhood_webapp_db
+        network_mode: "bridge"
         volumes:
             - $HOME/vrhood/webapp/mongo:/data/db
         ports:
@@ -13,12 +14,14 @@ services:
             context: .
             dockerfile: Dockerfile.backend
         container_name: vrhood_webapp_backend
+        network_mode: "bridge"
         restart: always
         volumes:
             - $HOME/vrhood/webapp/uploads:/data/uploads
-            - .:/app
-        command: bash -c "cd /app/backend && npm install && npm run dev"
+        command: npm start
         depends_on:
+            - db
+        links:
             - db
         ports:
             - 3030:3030
@@ -30,15 +33,19 @@ services:
             PORT: 3030
             # general
             BACKEND_HOST: http://localhost:3030
-            FRONTEND_HOST: http://localhost:4200
+            FRONTEND_HOST: http://localhost:8080
 
     frontend:
         build:
             context: .
             dockerfile: Dockerfile.frontend
-            target: node
+            args:
+                environment: development
+        container_name: ihm_webapp_frontend
+        network_mode: "bridge"
+        restart: always
         ports:
-            - 4200:4200
-        command: bash -c "cd /app/frontend/ && npm install && npm start"
-        volumes:
-            - .:/app
+            - "8080:80"
+        environment:
+            # node
+            NODE_ENV: development

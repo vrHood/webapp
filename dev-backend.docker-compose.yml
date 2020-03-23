@@ -10,13 +10,14 @@ services:
             - 27017:27017
 
     backend:
-        build: ./backend
+        build:
+            context: .
+            dockerfile: Dockerfile.backend
         container_name: vrhood_webapp_backend
         network_mode: "bridge"
         restart: always
         volumes:
             - $HOME/vrhood/webapp/uploads:/data/uploads
-            - .:/app
         command: npm start
         depends_on:
             - db
