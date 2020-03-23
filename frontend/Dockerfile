@@ -13,10 +13,8 @@ RUN npm install
 # copy app
 COPY . .
 
-ARG environment=development
-
 # build app
-RUN npm run build -- --verbose --configuration=$environment
+RUN npm run build -- --verbose --configuration=production
 
 
 # STAGE 2: run
