@@ -43,6 +43,9 @@ docker-compose up --build -d
 ng serve
 ```
 
+**OR start complete stack via docker**
+docker-compose -f docker-compose-dev.yml up
+
 ## API
 
 The backend will expose an API on port 3030 (for development: http://localhost:3030).
