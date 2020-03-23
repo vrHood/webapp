@@ -10,14 +10,13 @@ on:
       - develop
       - master
 
-env:
-  jobs.cd-backend.DOCKER_IMAGE_NAME: vrhood/webapp-backend
-  jobs.cd-frontend.DOCKER_IMAGE_NAME: vrhood/webapp-frontend
-
 jobs:
 
   cd-backend:
     runs-on: ubuntu-latest
+
+    env:
+      DOCKER_IMAGE_NAME: vrhood/webapp-backend
 
     steps:
       - uses: actions/checkout@v1
@@ -36,6 +35,9 @@ jobs:
 
   cd-frontend:
     runs-on: ubuntu-latest
+
+    env:
+      DOCKER_IMAGE_NAME: vrhood/webapp-frontend
 
     steps:
       - uses: actions/checkout@v1
