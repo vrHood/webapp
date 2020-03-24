@@ -1,4 +1,5 @@
 {
     "host": "api.vrhood.de",
+    "port": "3030",
     "mongodb": "mongodb://db:27017/vrhood-webapp"
 }
