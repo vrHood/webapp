@@ -1,3 +1,4 @@
 {
-    "host": "backend2-app.feathersjs.com"
+    "host": "api.vrhood.de",
+    "mongodb": "mongodb://db:27017/vrhood-webapp"
 }
