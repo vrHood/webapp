@@ -3,18 +3,26 @@ FROM node:erbium-slim
 # change working directory
 WORKDIR /usr/src/app
 
-# copy package.json & package-lock.json (if available)
-COPY backend/package*.json ./
-
 RUN npm install -g typescript
 
 RUN tsc -v
 
-# install dependencies
+# copy app
+COPY backend ./backend
+COPY shared ./shared
+COPY tslint.json .
+
+# build shared
+WORKDIR /usr/src/app/shared
+
 RUN npm install
 
-# copy app
-COPY backend/. .
+RUN npm run build
+
+WORKDIR /usr/src/app/backend
+
+# install dependencies
+RUN npm install
 
 RUN npm run build
 

@@ -4,16 +4,27 @@ FROM node:erbium-slim as node
 # change working directory
 WORKDIR /usr/src/app
 
-# copy package.json & package-lock.json (if available)
-COPY frontend/package*.json ./
+# copy app
+COPY frontend ./frontend
+COPY shared ./shared
+COPY tslint.json .
 
-# install dependencies
+# change working directory to shared
+WORKDIR /usr/src/app/shared
+
+# install shared dependencies
 RUN npm install
 
-# copy app
-COPY frontend/. .
+# build shared
+RUN npm run build
 
-# build app
+# change working directory to frontend
+WORKDIR /usr/src/app/frontend
+
+# install frontend dependencies
+RUN npm install
+
+# build frontend
 RUN npm run build -- --verbose --configuration=production
 
 
@@ -22,6 +33,6 @@ FROM nginx:1.16-alpine
 
 RUN apk add --no-cache bash
 
-COPY --from=node /usr/src/app/dist/frontend /usr/share/nginx/html
+COPY --from=node /usr/src/app/frontend/dist/frontend /usr/share/nginx/html
 
 COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf

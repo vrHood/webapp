@@ -114,6 +114,9 @@ $RECYCLE.BIN/
 
 # Frontend
 
+# Shared
+/shared/lib/
+
 ## compiled output
 /frontend/dist
 /frontend/tmp

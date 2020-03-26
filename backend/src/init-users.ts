@@ -1,12 +1,13 @@
 import { Paginated } from '@feathersjs/feathers';
-import { Application } from './declarations';
+
+import { Application, ServiceName } from './declarations';
 import logger from './logger';
 
 export default async function (app: Application) {
 
     logger.info('initUsers: start');
 
-    const usersService = app.service('users');
+    const usersService = app.service(ServiceName.USERS);
 
     const users = await usersService.find({
         query: {

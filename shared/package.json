@@ -1,5 +1,5 @@
 {
-    "name": "@vrhood/types",
+    "name": "@vrhood/shared",
     "version": "0.0.0",
     "homepage": "vrhood.de",
     "private": true,
@@ -28,15 +28,18 @@
             "name": "Jakob Niggel"
         }
     ],
-    "main": "index.js",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "tslint -p .",
-        "lintfix": "tslint -p . --fix"
+        "lintfix": "tslint -p . --fix",
+        "build": "npm run lint && shx rm -rf lib/ && tsc"
     },
     "devDependencies": {
         "tslint": "^6.1.0",
         "tslint-eslint-rules": "^5.4.0",
-        "typescript": "^3.8.3"
+        "typescript": "^3.8.3",
+        "shx": "^0.3.2"
     }
 }

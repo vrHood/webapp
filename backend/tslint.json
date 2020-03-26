@@ -1,5 +1,10 @@
 {
     "extends": [
         "../tslint.json"
-    ]
+    ],
+    "rules": {
+        "object-literal-shorthand": {
+            "options": []
+        }
+    }
 }
