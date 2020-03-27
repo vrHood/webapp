@@ -1,0 +1,142 @@
+%heading,
+%h1,
+%h2,
+%h3,
+%h4,
+%h5,
+%h6 {
+    color: $headings-color;
+    font: {
+        family: $headings-font-family;
+        weight: $headings-font-weight;
+    }
+    line-height: $headings-line-height;
+    margin: 0 0 $headings-margin-bottom;
+}
+
+%h1 {
+    font-size: $h1-font-size;
+
+    @include mq(mobile) {
+        font-size: $h1-font-size-mobile;
+    }
+
+    @include mq(tablet-sm) {
+        font-size: $h1-font-size-tablet;
+    }
+
+    @include mq(desktop-sm) {
+        font-size: $h1-font-size-desktop;
+    }
+}
+
+%h2 {
+    font-size: $h2-font-size;
+
+    @include mq(mobile) {
+        font-size: $h2-font-size-mobile;
+    }
+
+    @include mq(tablet-sm) {
+        font-size: $h2-font-size-tablet;
+    }
+
+    @include mq(desktop-sm) {
+        font-size: $h2-font-size-desktop;
+    }
+}
+
+%h3 {
+    font: {
+        size: $h3-font-size;
+        weight: $font-weight-semibold;
+    }
+
+    @include mq(mobile) {
+        font-size: $h3-font-size-mobile;
+    }
+
+    @include mq(tablet-sm) {
+        font-size: $h3-font-size-tablet;
+    }
+
+    @include mq(desktop-sm) {
+        font-size: $h3-font-size-desktop;
+    }
+}
+
+%h4 {
+    font-size: $h4-font-size;
+
+    @include mq(mobile) {
+        font-size: $h4-font-size-mobile;
+    }
+
+    @include mq(tablet-sm) {
+        font-size: $h4-font-size-tablet;
+    }
+
+    @include mq(desktop-sm) {
+        font-size: $h4-font-size-desktop;
+    }
+}
+
+%h5 {
+    font: {
+        size: $h5-font-size;
+        weight: $font-weight-semibold;
+    }
+
+    @include mq(mobile) {
+        font-size: $h5-font-size-mobile;
+    }
+
+    @include mq(tablet-sm) {
+        font-size: $h5-font-size-tablet;
+    }
+
+    @include mq(desktop-sm) {
+        font-size: $h5-font-size-desktop;
+    }
+}
+
+%h6 {
+    font-size: $h6-font-size;
+
+    @include mq(mobile) {
+        font-size: $h6-font-size-mobile;
+    }
+
+    @include mq(tablet-sm) {
+        font-size: $h6-font-size-tablet;
+    }
+
+    @include mq(desktop-sm) {
+        font-size: $h6-font-size-desktop;
+    }
+}
+
+
+h1 {
+    @extend %h1;
+}
+
+h2 {
+    @extend %h2;
+}
+
+h3 {
+    @extend %h3;
+}
+
+h4 {
+    @extend %h4;
+}
+
+h5 {
+    @extend %h5;
+}
+
+h6 {
+    @extend %h6;
+}

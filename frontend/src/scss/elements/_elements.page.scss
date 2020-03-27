@@ -1,0 +1,15 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: $color-body-background;
+    color: $color-text;
+    font: {
+        family: $font-family-base;
+        weight: $font-weight-base;
+    }
+    line-height: $line-height-base;
+}

@@ -1,0 +1,17 @@
+$breakpoints: () !default;
+$breakpoints: map-merge((
+        mobile-sm: 320px,
+        mobile: 480px,
+        mobile-lg: 576px,
+
+        tablet-sm: 768px,
+        tablet: 840px,
+        tablet-lg: 992px,
+
+        desktop-sm: 1100px,
+        desktop: 1280px,
+        desktop-lg: 1440px,
+        desktop-xl: 1690px
+), $breakpoints);
+
+$breakpoints-separator: \@ !default;

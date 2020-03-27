@@ -1,0 +1,79 @@
+@mixin grid-modifiers($breakpoint: null) {
+
+    .o-grid {
+
+        &.o-grid--row#{$breakpoint} {
+            flex-direction: row;
+            margin: 0 var(--grid-gutter);
+        }
+
+        &.o-grid--row-reverse#{$breakpoint} {
+            flex-direction: row-reverse;
+            margin: 0 var(--grid-gutter);
+        }
+
+        &.o-grid--column#{$breakpoint} {
+            flex-direction: column;
+            margin: var(--grid-gutter) 0;
+        }
+
+        &.o-grid--column-reverse#{$breakpoint} {
+            flex-direction: column-reverse;
+            margin: var(--grid-gutter) 0;
+        }
+
+        &.o-grid--no-gutters#{$breakpoint} {
+            margin: 0 !important;
+        }
+
+        &.o-grid--align-start#{$breakpoint} {
+            justify-content: flex-start;
+        }
+
+        &.o-grid--align-center#{$breakpoint} {
+            justify-content: center;
+        }
+
+        &.o-grid--align-end#{$breakpoint} {
+            justify-content: flex-end;
+        }
+
+        &.o-grid--align-space-around#{$breakpoint} {
+            justify-content: space-around;
+        }
+
+        &.o-grid--align-space-between#{$breakpoint} {
+            justify-content: space-between;
+        }
+
+        &.o-grid--align-vertical-start#{$breakpoint} {
+            align-items: flex-start;
+        }
+
+        &.o-grid--align-vertical-center#{$breakpoint} {
+            align-items: center;
+        }
+
+        &.o-grid--align-vertical-end#{$breakpoint} {
+            align-items: flex-end;
+        }
+    }
+}
+
+.o-grid {
+    // divide grid gutter by 2 because flexbox margins are summed up
+    --grid-gutter: #{$grid-gutter / 2};
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 calc(var(--grid-gutter) * -1);
+}
+
+@include grid-modifiers();
+
+@if (variable-exists(breakpoints)) {
+    @each $breakpoint-name, $breakpoint-value in $breakpoints {
+        @include mq($from: $breakpoint-name) {
+            @include grid-modifiers(#{$breakpoints-separator}#{$breakpoint-name});
+        }
+    }
+}

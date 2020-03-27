@@ -1,0 +1,79 @@
+@mixin cell-modifiers($breakpoint: null) {
+
+    .o-cell {
+
+        &.o-cell--vertical-start#{$breakpoint} {
+            align-self: flex-start;
+        }
+
+        &.o-cell--vertical-center#{$breakpoint} {
+            align-self: center;
+        }
+
+        &.o-cell--vertical-end#{$breakpoint} {
+            align-self: flex-end;
+        }
+    }
+}
+
+@mixin cell-grid-modifiers($breakpoint: null) {
+
+    .o-grid {
+
+        &.o-grid--row#{$breakpoint} {
+
+            > .o-cell {
+                padding: 0 var(--grid-gutter);
+            }
+        }
+
+        &.o-grid--row-reverse#{$breakpoint} {
+
+            > .o-cell {
+                padding: 0 var(--grid-gutter);
+            }
+        }
+
+        &.o-grid--column#{$breakpoint} {
+
+            > .o-cell {
+                padding: var(--grid-gutter) 0;
+            }
+        }
+
+        &.o-grid--column-reverse#{$breakpoint} {
+
+            > .o-cell {
+                padding: var(--grid-gutter) 0;
+            }
+        }
+
+        &.o-grid--no-gutters#{$breakpoint} {
+
+            > .o-cell {
+                padding: 0 !important;
+            }
+        }
+    }
+}
+
+.o-cell {
+    display: block;
+    flex-basis: 0;
+    flex-grow: 1;
+    padding: 0 var(--grid-gutter);
+    position: relative;
+    width: 100%;
+}
+
+@include cell-modifiers();
+@include cell-grid-modifiers();
+
+@if (variable-exists(breakpoints)) {
+    @each $breakpoint-name, $breakpoint-value in $breakpoints {
+        @include mq($from: $breakpoint-name) {
+            @include cell-modifiers(#{$breakpoints-separator}#{$breakpoint-name});
+            @include cell-grid-modifiers(#{$breakpoints-separator}#{$breakpoint-name});
+        }
+    }
+}

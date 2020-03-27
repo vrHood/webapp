@@ -1,0 +1,10 @@
+@mixin transition($properties, $duration: $transition-duration, $easing: $transition-easing, $delay: $transition-delay) {
+
+    $transition-definitions: ();
+
+    @each $property in $properties {
+        $transition-definitions: append($transition-definitions, $property $duration $easing $delay, $separator: comma);
+    }
+
+    transition: $transition-definitions;
+}
