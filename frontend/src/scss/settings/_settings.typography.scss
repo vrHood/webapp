@@ -1,0 +1,19 @@
+// Font family
+$font-family-sans-serif:    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' !default;
+$font-family-monospace:     'Roboto Mono', SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace !default;
+
+$font-family-base:          join('Quicksand', $font-family-sans-serif);
+$font-family-brand:         join('Ropa Sans', $font-family-sans-serif);
+
+
+// Font settings
+$font-size:                 16px !default;
+$font-weight-normal:        400 !default;
+$font-weight-medium:        500 !default;
+$font-weight-semibold:      600 !default;
+$font-weight-bold:          700 !default;
+$line-height:               1.5 !default;
+
+// Base settings
+$font-weight-base:          $font-weight-normal;
+$line-height-base:          $line-height;

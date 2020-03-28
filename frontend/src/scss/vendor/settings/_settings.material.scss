@@ -1,0 +1,157 @@
+@import '~@angular/material/theming';
+
+$material-typography-config: mat-typography-config(
+    $font-family:   $font-family-base,
+    $display-4:     mat-typography-level(112px, 112px, 400, $letter-spacing: -0.05em),
+    $display-3:     mat-typography-level(56px, 56px, 500, $letter-spacing: -0.02em),
+    $display-2:     mat-typography-level(45px, 48px, 500, $letter-spacing: -0.005em),
+    $display-1:     mat-typography-level(34px, 40px, 500),
+    $headline:      mat-typography-level(24px, 32px, 500),
+    $title:         mat-typography-level(20px, 32px, 600),
+    $subheading-2:  mat-typography-level(16px, 28px, 500),
+    $subheading-1:  mat-typography-level(15px, 24px, 500),
+    $body-2:        mat-typography-level(14px, 24px, 600),
+    $body-1:        mat-typography-level(14px, 20px, 500),
+    $caption:       mat-typography-level(12px, 20px, 500),
+    $button:        mat-typography-level(14px, 14px, 600),
+        // Line-height must be unit-less fraction of the font-size.
+    $input:         mat-typography-level(inherit, 1.125, 500)
+);
+
+$material-base-palette-primary: (
+    50: #e8f4f3,
+    100: #c5e5e0,
+    200: #9fd3cc,
+    300: #78c1b7,
+    400: #5bb4a7,
+    500: #3ea798,
+    600: #389f90,
+    700: #309685,
+    800: #288c7b,
+    900: #1b7c6a,
+    A100: #b6fff0,
+    A200: #83ffe6,
+    A400: #50ffdc,
+    A700: #36ffd6,
+    contrast: (
+        50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $dark-primary-text,
+        300: $dark-primary-text,
+        400: $dark-primary-text,
+        500: $light-primary-text,
+        600: $light-primary-text,
+        700: $light-primary-text,
+        800: $light-primary-text,
+        900: $light-primary-text,
+        A100: $dark-primary-text,
+        A200: $dark-primary-text,
+        A400: $dark-primary-text,
+        A700: $dark-primary-text,
+    )
+);
+$material-palette-primary: mat-palette($material-base-palette-primary);
+
+$material-base-palette-accent: (
+    50: #fceaec,
+    100: #f8cccf,
+    200: #f4aaaf,
+    300: #f0878e,
+    400: #ec6e76,
+    500: #e9545e,
+    600: #e64d56,
+    700: #e3434c,
+    800: #df3a42,
+    900: #d92931,
+    A100: #ffffff,
+    A200: #ffe5e6,
+    A400: #ffb2b5,
+    A700: #ff989c,
+    contrast: (
+        50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $dark-primary-text,
+        300: $dark-primary-text,
+        400: $dark-primary-text,
+        500: $light-primary-text,
+        600: $light-primary-text,
+        700: $light-primary-text,
+        800: $light-primary-text,
+        900: $light-primary-text,
+        A100: $dark-primary-text,
+        A200: $dark-primary-text,
+        A400: $dark-primary-text,
+        A700: $dark-primary-text,
+    )
+);
+$material-palette-accent: mat-palette($material-base-palette-accent);
+
+$material-base-palette-accent-alt: (
+    50: #f9f5eb,
+    100: #f0e5ce,
+    200: #e7d4ae,
+    300: #ddc28d,
+    400: #d5b574,
+    500: #cea85c,
+    600: #c9a054,
+    700: #c2974a,
+    800: #bc8d41,
+    900: #b07d30,
+    A100: #fffbf6,
+    A200: #ffe6c3,
+    A400: #ffd090,
+    A700: #ffc576,
+    contrast: (
+        50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $dark-primary-text,
+        300: $dark-primary-text,
+        400: $dark-primary-text,
+        500: $dark-primary-text,
+        600: $dark-primary-text,
+        700: $dark-primary-text,
+        800: $dark-primary-text,
+        900: $dark-primary-text,
+        A100: $dark-primary-text,
+        A200: $dark-primary-text,
+        A400: $dark-primary-text,
+        A700: $dark-primary-text,
+    )
+);
+$material-palette-accent-alt: mat-palette($material-base-palette-accent-alt);
+
+$material-base-palette-error: (
+    50: #ffebee,
+    100: #ffcdd2,
+    200: #ef9a9a,
+    300: #e57373,
+    400: #ef5350,
+    500: #f44336,
+    600: #e53935,
+    700: #d32f2f,
+    800: #c62828,
+    900: #b71c1c,
+    A100: #ff8a80,
+    A200: #ff5252,
+    A400: #ff1744,
+    A700: #d50000,
+    contrast: (
+        50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $dark-primary-text,
+        300: $dark-primary-text,
+        400: $dark-primary-text,
+        500: $light-primary-text,
+        600: $light-primary-text,
+        700: $light-primary-text,
+        800: $light-primary-text,
+        900: $light-primary-text,
+        A100: $dark-primary-text,
+        A200: $light-primary-text,
+        A400: $light-primary-text,
+        A700: $light-primary-text,
+    )
+);
+$material-palette-error: mat-palette($material-base-palette-error);
+
+$material-theme: mat-light-theme($material-palette-primary, $material-palette-accent, $material-palette-error);

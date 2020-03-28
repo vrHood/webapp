@@ -1,0 +1,20 @@
+@mixin displays($breakpoint: null) {
+
+    @each $value in $display-values {
+
+        // Build a class in the format `.u-d-block[@<breakpoint>]`.
+        .u-d-#{$value}#{$breakpoint} {
+            display: $value !important;
+        }
+    }
+}
+
+@include displays();
+
+@if (variable-exists(breakpoints)) {
+    @each $breakpoint-name, $breakpoint-value in $breakpoints {
+        @include mq($from: $breakpoint-name) {
+            @include displays(#{$breakpoints-separator}#{$breakpoint-name});
+        }
+    }
+}

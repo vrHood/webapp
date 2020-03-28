@@ -1,0 +1,16 @@
+.c-form-checkbox {
+    margin: 0.5rem 0;
+
+    mat-error {
+        font: {
+            family: 'Quicksand', sans-serif;
+            size: 0.75rem;
+            weight: 500;
+        }
+        letter-spacing: normal;
+        line-height: 1.125;
+        margin-top: 0.25rem;
+        padding-left: 1.5rem;
+    }
+}
+
