@@ -1,6 +1,7 @@
 import { Paginated } from '@feathersjs/feathers';
+import { ServiceName } from '@vrhood/shared'
 
-import { Application, ServiceName } from './declarations';
+import { Application } from './declarations';
 import logger from './logger';
 
 export default async function (app: Application) {

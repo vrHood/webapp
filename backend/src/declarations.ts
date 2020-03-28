@@ -7,12 +7,6 @@ export enum ModelName {
     USER = 'user'
 }
 
-export enum ServiceName {
-    CATEGORIES = 'categories',
-    RETAILERS = 'retailers',
-    USERS = 'users'
-}
-
 // A mapping of service names to types. Will be extended in service files.
 // tslint:disable-next-line:no-empty-interface
 export interface ServiceTypes {

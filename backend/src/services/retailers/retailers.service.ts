@@ -1,7 +1,7 @@
 import { ServiceAddons } from '@feathersjs/feathers';
-import { IRetailer } from '@vrhood/shared';
+import { IRetailer, ServiceName } from '@vrhood/shared';
 
-import { Application, ServiceName } from '../../declarations';
+import { Application } from '../../declarations';
 import createModel from '../../models/retailer.model';
 
 import { Retailers } from './retailers.class';

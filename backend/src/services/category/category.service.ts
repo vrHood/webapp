@@ -1,7 +1,7 @@
 import { ServiceAddons } from '@feathersjs/feathers';
-import { ICategory } from '@vrhood/shared';
+import { ICategory, ServiceName } from '@vrhood/shared';
 
-import { Application, ServiceName } from '../../declarations';
+import { Application } from '../../declarations';
 import createModel from '../../models/category.model';
 
 import { Category } from './category.class';

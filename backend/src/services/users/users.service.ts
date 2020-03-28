@@ -1,8 +1,8 @@
 // Initializes the `users` service on path `/users`
 import { ServiceAddons } from '@feathersjs/feathers';
-import { IUser } from '@vrhood/shared';
+import { IUser, ServiceName } from '@vrhood/shared';
 
-import { Application, ServiceName } from '../../declarations';
+import { Application } from '../../declarations';
 import createModel from '../../models/user.model';
 
 import { Users } from './users.class';

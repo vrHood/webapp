@@ -5,6 +5,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthService } from './services/auth/authentication-service.class';
+import { FeathersAuthService } from './services/auth/feathers-auth-service.class';
+import { DataServiceFactory } from './services/data/data-service-factory.class';
+import { FeathersDataServiceFactory } from './services/data/feathers-data-service-factory.class';
 
 @NgModule({
     imports: [
@@ -17,7 +21,10 @@ import { AppComponent } from './app.component';
     declarations: [
         AppComponent
     ],
-    providers: [],
+    providers: [
+        { provide: DataServiceFactory, useClass: FeathersDataServiceFactory },
+        { provide: AuthService, useClass: FeathersAuthService }
+    ],
     bootstrap: [ AppComponent ]
 })
 export class AppModule {
