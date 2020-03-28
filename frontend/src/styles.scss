@@ -1,0 +1,34 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700|Ropa+Sans&display=swap');
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import '~@angular/material/theming';
+
+body {
+    margin: 0;
+    font-family: 'Ropa Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+
+$custom-typography: mat-typography-config(
+    $font-family: 'Ropa Sans',
+    $headline: mat-typography-level(32px, 48px, 700),
+    $body-1: mat-typography-level(16px, 24px, 500)
+);
+
+@include angular-material-typography($custom-typography);
+
+button.mat-button:not(.mat-icon-button) {
+    mat-icon {
+        --icon-size: 20px;
+        height: var(--icon-size);
+        width: var(--icon-size);
+        font-size: var(--icon-size);
+        margin-right: 4px;
+        margin-left: -4px;
+    }
+}

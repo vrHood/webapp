@@ -1,0 +1,13 @@
+<div class="app-admin-page__menu">
+    <mat-list class="menu__list">
+        <mat-list-item class="menu__item" *ngFor="let menuItem of menuItems" [routerLink]="menuItem.route" [routerLinkActive]="['menu__item--active']">
+            <mat-icon mat-list-icon>{{menuItem.icon}}</mat-icon>
+            <span matLine>{{ menuItem.label }}</span>
+            <div class="item__spread"></div>
+            <mat-icon>chevron_right</mat-icon>
+        </mat-list-item>
+    </mat-list>
+</div>
+<div class="app-admin-page__content">
+    <router-outlet></router-outlet>
+</div>

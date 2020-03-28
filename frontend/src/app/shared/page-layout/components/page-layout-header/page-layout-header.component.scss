@@ -1,0 +1,20 @@
+app-page-layout-header {
+    display: block;
+}
+
+.app-page-layout-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+
+    .app-page-layout-header__title {
+        font-weight: 100;
+        font-size: 3rem;
+        color: rgba(0, 0, 0, 0.6);
+        margin-left: 20px
+
+    }
+
+}

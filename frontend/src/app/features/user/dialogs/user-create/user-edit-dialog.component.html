@@ -1,0 +1,114 @@
+<ng-container [ngSwitch]="mode">
+    <h2 *ngSwitchCase="'create'">Nutzer erstellen</h2>
+    <h2 *ngSwitchCase="'edit'">Nutzer bearbeiten</h2>
+    <h2 *ngSwitchCase="'delete'">Nutzer löschen</h2>
+    <h2 *ngSwitchCase="'changePassword'">Passwort ändern</h2>
+</ng-container>
+
+<div *ngIf="mode === 'delete'">
+    <p>Wollen Sie diesen Nutzer wirklich löschen?</p>
+
+    <div class="app-user-edit-dialog__actions">
+        <button mat-button mat-stroked-button type="button" [disabled]="isSaving" (click)="onCancel()">Abbrechen</button>
+        <button mat-button mat-raised-button type="submit" color="warn" [disabled]="isSaving" (click)="onDelete()">Löschen</button>
+    </div>
+</div>
+
+<form *ngIf="mode === 'create'" [formGroup]="form" (submit)="onSubmit()">
+    <mat-form-field appearance="outline">
+        <mat-label>Vorname</mat-label>
+        <input matInput type="text" formControlName="firstName">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Nachname</mat-label>
+        <input matInput type="text" formControlName="lastName">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>E-Mail</mat-label>
+        <input matInput type="email" formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Passwort</mat-label>
+        <input matInput type="password" formControlName="password">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Passwort wiederholen</mat-label>
+        <input matInput type="password" formControlName="confirmPassword">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Rolle</mat-label>
+        <mat-select formControlName="role">
+            <mat-option value="admin">Administrator</mat-option>
+            <mat-option value="moderator">Moderator</mat-option>
+            <mat-option value="retailer">Anbieter</mat-option>
+            <mat-option value="user">Nutzer</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="app-user-edit-dialog__actions">
+        <button mat-button mat-stroked-button type="button" [disabled]="isSaving" (click)="onCancel()">Abbrechen</button>
+        <button mat-button mat-raised-button type="submit" color="primary" [disabled]="isSaving">Speichern</button>
+    </div>
+</form>
+
+<form *ngIf="mode === 'edit'" [formGroup]="form" (submit)="onSubmit()">
+    <mat-form-field appearance="outline">
+        <mat-label>Vorname</mat-label>
+        <input matInput type="text" formControlName="firstName">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Nachname</mat-label>
+        <input matInput type="text" formControlName="lastName">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>E-Mail</mat-label>
+        <input matInput type="email" formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Rolle</mat-label>
+        <mat-select formControlName="role">
+            <mat-option value="admin">Administrator</mat-option>
+            <mat-option value="moderator">Moderator</mat-option>
+            <mat-option value="retailer">Anbieter</mat-option>
+            <mat-option value="user">Nutzer</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="app-user-edit-dialog__actions">
+        <button mat-button mat-stroked-button type="button" [disabled]="isSaving" (click)="onCancel()">Abbrechen</button>
+        <button mat-button mat-raised-button type="submit" color="primary" [disabled]="isSaving">Speichern</button>
+    </div>
+</form>
+
+<form *ngIf="mode === 'changePassword'" [formGroup]="form" (submit)="onSubmit()">
+
+    <mat-form-field appearance="outline">
+        <mat-label>Aktuelles Passwort</mat-label>
+        <input matInput type="password" formControlName="currentPassword">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Neues Passwort</mat-label>
+        <input matInput type="password" formControlName="password">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Neues Passwort wiederholen</mat-label>
+        <input matInput type="password" formControlName="confirmPassword">
+    </mat-form-field>
+
+    <div class="app-user-edit-dialog__actions">
+        <button mat-button mat-stroked-button type="button" [disabled]="isSaving" (click)="onCancel()">Abbrechen</button>
+        <button mat-button mat-raised-button type="submit" color="primary" [disabled]="isSaving">Speichern</button>
+    </div>
+</form>
+
+<mat-progress-bar *ngIf="isSaving" mode="indeterminate"></mat-progress-bar>
