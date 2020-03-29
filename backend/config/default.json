@@ -28,5 +28,12 @@
             "passwordField": "password"
         }
     },
-    "mongodb": "mongodb://vrhood_webapp_db:27017/vrhood-webapp"
+    "mongodb": "mongodb://vrhood_webapp_db:27017/vrhood-webapp",
+    "initialUsers": [
+        {
+            "email": "info@vrhood.de",
+            "password": "vr*Hood",
+            "role": "admin"
+        }
+    ]
 }

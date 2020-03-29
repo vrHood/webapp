@@ -1,9 +1,1 @@
-{
-    "initialUsers": [
-        {
-            "email": "info@vrhood.de",
-            "password": "vr*Hood",
-            "role": "admin"
-        }
-    ]
-}
+{}
