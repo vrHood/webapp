@@ -9,7 +9,8 @@ export default function (app: Application) {
     const schema = new Schema<ICategory>({
         name: { type: String, required: true },
         icon: { type: String, required: true },
-        color: { type: String }
+        color: { type: String },
+        active: { type: Boolean, default: false }
     }, {
         timestamps: true
     });

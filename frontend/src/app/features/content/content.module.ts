@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 
@@ -11,7 +13,9 @@ import { ContentPage } from './pages/content/content.page';
         CommonModule,
         RouterModule.forChild(CONTENT_ROUTES),
 
-        MatSidenavModule
+        MatSidenavModule,
+        MatIconModule,
+        MatButtonModule
     ],
     declarations: [ ContentPage ]
 })

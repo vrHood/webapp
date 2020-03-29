@@ -1,0 +1,30 @@
+<mat-sidenav-container>
+    <mat-sidenav class="app-admin-page__menu" [mode]="sidenavMode$ | async" [opened]="sidenavOpened$" #sidenav>
+
+        <img class="menu__logo"
+             src="../assets/images/vrhood-logo-white.svg" routerLink="/"/>
+
+        <mat-list class="menu__list" *ngIf="isAuthenticated$ | async">
+            <mat-list-item class="menu__item" *ngFor="let menuItem of menuItems" [routerLink]="menuItem.route"
+                           [routerLinkActive]="['menu__item--active']">
+                <mat-icon fontSet="material-icons-outlined" mat-list-icon>{{menuItem.icon}}</mat-icon>
+                <span matLine>{{ menuItem.label }}</span>
+                <div class="item__spread"></div>
+                <mat-icon>chevron_right</mat-icon>
+            </mat-list-item>
+        </mat-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="app-admin-page__content">
+        <mat-toolbar>
+            <mat-toolbar-row>
+                <button mat-button mat-icon-button (click)="sidenav.toggle(!sidenav.opened)">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <div class="space"></div>
+                <button mat-button *ngIf="isAuthenticated$ | async" (click)="logout()">Abmelden</button>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

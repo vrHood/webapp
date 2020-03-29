@@ -1,0 +1,28 @@
+app-retailer-detail-page {
+    display: block;
+}
+
+.app-retailer-detail-page {
+
+    table.app-retailer-detail-page__data {
+        border-spacing: 24px 16px;
+        max-width: 800px;
+
+        td {
+            vertical-align: top;
+
+            &.data__name {
+                font-weight: 600;
+                text-align: end;
+            }
+
+            &.data__value {
+                color: rgba(black, 0.8);
+            }
+        }
+    }
+
+    app-active-toggle {
+        display: inline-block;
+    }
+}

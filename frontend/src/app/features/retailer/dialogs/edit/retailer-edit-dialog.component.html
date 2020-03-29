@@ -1,0 +1,140 @@
+<app-dialog>
+    <ng-container [ngSwitch]="mode">
+        <h2 *ngSwitchCase="'create'">{{ 'FEATURES.RETAILER.DIALOGS.CREATE.TITLE' | translate }}</h2>
+        <h2 *ngSwitchCase="'edit'">{{ 'FEATURES.RETAILER.DIALOGS.EDIT.TITLE' | translate }}</h2>
+    </ng-container>
+
+    <form [formGroup]="form" (submit)="onSubmit()">
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.NAME.LABEL'  | translate }}</mat-label>
+            <input matInput type="text" formControlName="name">
+        </mat-form-field>
+
+        <h3>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.GROUP.ADDRESS.TITLE' | translate }}</h3>
+
+        <h3>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.GROUP.CONTACT.TITLE' | translate }}</h3>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.WEBSITE.LABEL'  | translate }}</mat-label>
+            <input matInput type="text" formControlName="website">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.FACEBOOK.LABEL'  | translate }}</mat-label>
+            <input matInput type="text" formControlName="facebook">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.INSTAGRAM.LABEL'  | translate }}</mat-label>
+            <input matInput type="text" formControlName="instagram">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.PHONE.LABEL'  | translate }}</mat-label>
+            <input matInput type="text" formControlName="phone">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.MOBILE.LABEL'  | translate }}</mat-label>
+            <input matInput type="email" formControlName="mobile">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.FAX.LABEL'  | translate }}</mat-label>
+            <input matInput type="email" formControlName="mobile">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.EMAIL.LABEL'  | translate }}</mat-label>
+            <input matInput type="email" formControlName="email">
+        </mat-form-field>
+
+        <h3>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.GROUP.DESCRIPTION.TITLE'  | translate }}</h3>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.DESCRIPTION.LABEL'  | translate }}</mat-label>
+            <textarea matInput matTextareaAutosize type="text" formControlName="description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.OFFER.LABEL'  | translate }}</mat-label>
+            <textarea matInput matTextareaAutosize type="text" formControlName="offer"></textarea>
+        </mat-form-field>
+
+        <h3>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.GROUP.ORDER_INFORMATION.TITLE' | translate }}</h3>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.ORDER_TYPES.LABEL'  | translate }}</mat-label>
+            <mat-select formControlName="orderTypes" multiple (selectionChange)="changeDetector.detectChanges()">
+                <mat-select-trigger>
+                    <mat-chip-list aria-label="Bestellarten">
+                        <mat-chip *ngFor="let orderType of form.get('orderTypes').value"
+                                  removable
+                                  (removed)="removeSelectValue('orderTypes', orderType)">
+                            {{ orderTypeLabels[orderType] | translate }}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                </mat-select-trigger>
+                <mat-option *ngFor="let orderType of orderTypes" [value]="orderType.value">{{ orderType.label | translate }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="hasOtherOrderType">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.OTHER_ORDER_TYPES.LABEL'  | translate }}</mat-label>
+            <input matInput type="text" formControlName="otherOrderType">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.PAYMENT_TYPES.LABEL'  | translate }}</mat-label>
+            <mat-select formControlName="paymentTypes" multiple (selectionChange)="changeDetector.detectChanges()">
+                <mat-select-trigger>
+                    <mat-chip-list aria-label="Zahlungsarten">
+                        <mat-chip *ngFor="let paymentType of form.get('paymentTypes').value"
+                                  removable
+                                  (removed)="removeSelectValue('paymentTypes', paymentType)">
+                            {{ paymentTypeLabels[paymentType] | translate }}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                </mat-select-trigger>
+                <mat-option *ngFor="let paymentType of paymentTypes"
+                            [value]="paymentType.value">{{ paymentType.label | translate }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="hasOtherPaymentType">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.OTHER_PAYMENT_TYPES.LABEL'  | translate }}</mat-label>
+            <input matInput type="text" formControlName="otherPaymentType">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.DELIVERY_AREAS.LABEL'  | translate }}</mat-label>
+            <mat-select formControlName="deliveryAreas" multiple (selectionChange)="changeDetector.detectChanges()">
+                <mat-select-trigger>
+                    <mat-chip-list aria-label="Liefergebiete">
+                        <mat-chip *ngFor="let deliveryArea of form.get('deliveryAreas').value"
+                                  removable
+                                  (removed)="removeSelectValue('deliveryAreas', deliveryArea)">
+                            {{ deliveryAreaLabels[deliveryArea] | translate }}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                </mat-select-trigger>
+                <mat-option *ngFor="let deliveryArea of deliveryAreas"
+                            [value]="deliveryArea.value">{{ deliveryArea.label | translate }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="hasOtherDeliveryArea">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.OTHER_DELIVERY_AREAS.LABEL'  | translate }}</mat-label>
+            <input matInput type="text" formControlName="otherDeliveryArea">
+        </mat-form-field>
+
+        <div appDialogActions>
+            <button mat-button mat-stroked-button appDialogAction type="button" (click)="onCancel()">{{ 'FEATURES.RETAILER.DIALOGS.EDIT.ACTION.CANCEL'  | translate }}</button>
+            <button mat-button mat-flat-button appDialogAction type="submit" color="primary">{{ 'FEATURES.RETAILER.DIALOGS.EDIT.ACTION.SAVE'  | translate }}</button>
+        </div>
+    </form>
+
+</app-dialog>

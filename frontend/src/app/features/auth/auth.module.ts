@@ -1,7 +1,6 @@
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,9 +16,9 @@ import { RouterModule } from '@angular/router';
 import { AppErrorModule } from '../../shared/error/app-error.module';
 import { AppFooterModule } from '../../shared/footer/app-footer.module';
 import { AUTH_ROUTES } from './auth.routes';
+import { RetailerRegistrationFormComponent } from './components/retailer-registration-form/retailer-registration-form.component';
 import { LoginPage } from './pages/login/login.page';
 import { RetailerRegistrationPage } from './pages/retailer-registration/retailer-registration.page';
-import { RetailerRegistrationFormComponent } from './components/retailer-registration-form/retailer-registration-form.component';
 
 @NgModule({
     imports: [

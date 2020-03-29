@@ -1,0 +1,112 @@
+<app-page-layout [parent]="{
+            icon: 'business',
+            label: ('FEATURES.RETAILER.PAGES.DETAIL.ACTION.PARENT' | translate),
+            route: '/admin/retailers'
+        }">
+
+    <app-page-layout-header>
+        <h1 appPageLayoutHeaderTitle>{{ retailer.name }}</h1>
+
+        <app-active-toggle appPageLayoutHeaderAction [entity]="retailer" [service]="retailerService"></app-active-toggle>
+
+        <button mat-button mat-stroked-button appPageLayoutHeaderAction (click)="edit()">
+            <mat-icon>edit</mat-icon>
+            {{ 'FEATURES.RETAILER.PAGES.DETAIL.ACTION.EDIT' | translate }}
+        </button>
+
+        <button mat-button mat-stroked-button appPageLayoutHeaderAction color="accent" (click)="delete()">
+            <mat-icon>delete</mat-icon>
+            {{ 'FEATURES.RETAILER.PAGES.DETAIL.ACTION.DELETE' | translate }}
+        </button>
+    </app-page-layout-header>
+
+    <table class="app-retailer-detail-page__data">
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.ADDRESS' | translate }}</td>
+            <td class="data__value">
+                {{ retailer?.location?.street }} {{ retailer?.location?.houseNumber }}
+                {{ retailer?.location?.additionalAddress }}
+                {{ retailer?.location?.zip }} {{ retailer?.location?.city }}
+            </td>
+        </tr>
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.PHONE' | translate }}</td>
+            <td class="data__value">
+                <a *ngIf="retailer?.phone" href="tel:{{retailer.phone}}" (click)="$event.stopPropagation()"
+                   target="_blank">{{retailer.phone}}</a>
+                <a *ngIf="retailer?.mobile" href="tel:{{retailer.mobile}}" (click)="$event.stopPropagation()"
+                   target="_blank">{{retailer.mobile}}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.FAX' | translate }}</td>
+            <td class="data__value"><a *ngIf="retailer?.fax" href="fax:{{retailer.fax}}" (click)="$event.stopPropagation()"
+                                       target="_blank">{{retailer.fax}}</a></td>
+        </tr>
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.EMAIL' | translate }}</td>
+            <td class="data__value"><a *ngIf="retailer?.email" href="mailto:{{retailer.email}}" (click)="$event.stopPropagation()"
+                                       target="_blank">{{retailer.email}}</a></td>
+        </tr>
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.WEBSITE' | translate }}</td>
+            <td class="data__value"><a *ngIf="retailer?.website" href="{{retailer.website}}" (click)="$event.stopPropagation()"
+                                       target="_blank">{{retailer.website}}</a></td>
+        </tr>
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.FACEBOOK' | translate }}</td>
+            <td class="data__value"><a *ngIf="retailer?.facebook" href="{{retailer.facebook}}" (click)="$event.stopPropagation()"
+                                       target="_blank">{{retailer.facebook}}</a></td>
+        </tr>
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.INSTAGRAM' | translate }}</td>
+            <td class="data__value"><a *ngIf="retailer?.instagram" href="{{retailer.instagram}}" (click)="$event.stopPropagation()"
+                                       target="_blank">{{retailer.instagram}}</a></td>
+        </tr>
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.DESCRIPTION' | translate }}</td>
+            <td class="data__value">{{retailer.description}}</td>
+        </tr>
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.OFFER' | translate }}</td>
+            <td class="data__value">{{retailer.offer}}</td>
+        </tr>
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.ORDER_TYPES' | translate }}</td>
+            <td class="data__value">
+                <mat-chip-list>
+                    <mat-chip *ngFor="let orderType of retailer.orderTypes">{{ orderTypeLabels[orderType] | translate }}</mat-chip>
+                </mat-chip-list>
+                <span *ngIf="retailer.otherOrderType">{{ orderTypeLabels['other'] | translate }}: {{ retailer.otherOrderType }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.PAYMENT_TYPES' | translate }}</td>
+            <td class="data__value">
+                <mat-chip-list>
+                    <mat-chip *ngFor="let paymentType of retailer.paymentTypes">{{ paymentTypeLabels[paymentType] | translate }}</mat-chip>
+                </mat-chip-list>
+                <span *ngIf="retailer.otherPaymentType">{{ paymentTypeLabels['other'] | translate }}: {{ retailer.otherPaymentType }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.DELIVERY_AREAS' | translate }}</td>
+            <td class="data__value">
+                <mat-chip-list>
+                    <mat-chip
+                        *ngFor="let deliveryArea of retailer.deliveryAreas">{{ deliveryAreaLabels[deliveryArea] | translate }}</mat-chip>
+                </mat-chip-list>
+                <span *ngIf="retailer.otherDeliveryArea">{{ deliveryAreaLabels['other'] | translate }}
+                    : {{ retailer.otherDeliveryArea }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.TAGS' | translate }}</td>
+            <td class="data__value">
+                <mat-chip-list>
+                    <mat-chip *ngFor="let tag of retailer.tags">{{ tag }}</mat-chip>
+                </mat-chip-list>
+            </td>
+        </tr>
+    </table>
+</app-page-layout>

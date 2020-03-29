@@ -1,0 +1,10 @@
+<div class="app-table__table-container">
+    <ng-content select="[appOverviewTable]"></ng-content>
+</div>
+
+<mat-paginator class="app-table__paginator"
+               [length]="dataSource.total"
+               [pageSize]="defaultPageSize"
+               [pageIndex]="defaultPageIndex"
+               [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChanged($event)">
+</mat-paginator>

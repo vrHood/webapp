@@ -1,0 +1,33 @@
+app-category-list-page {
+    display: block;
+}
+
+.app-category-list-page {
+
+    table.mat-table {
+
+        tr.mat-row {
+            transition: background-color 300ms ease;
+
+            &:hover {
+                background-color: rgba(black, 0.05);
+            }
+
+            button {
+                transition: color 300ms ease;
+
+                &:not(.mat-warn) {
+                    color: rgba(black, 0.75);
+                }
+            }
+
+            &:not(:hover) {
+
+                button {
+                    color: rgba(black, 0.5);
+                }
+            }
+        }
+
+    }
+}

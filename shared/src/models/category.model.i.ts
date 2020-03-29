@@ -1,6 +1,6 @@
-import { IBaseEntity } from './base-entity.model.i';
+import { IActivatableEntity } from './activatable-entity.model.i';
 
-export interface ICategory extends IBaseEntity {
+export interface ICategory extends IActivatableEntity {
     name: string;
     icon: string;
     color: string;

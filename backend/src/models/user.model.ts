@@ -6,6 +6,8 @@ export default function (app: Application) {
     const mongooseClient = app.get('mongooseClient');
 
     const userSchema = new mongooseClient.Schema<IUser>({
+        firstName: { type: String },
+        lastName: { type: String },
         email: { type: String, unique: true, lowercase: true },
         password: { type: String },
         role: { type: String },
@@ -15,7 +17,8 @@ export default function (app: Application) {
             required() {
                 return UserRole.RETAILER === (this as IUser).role;
             }
-        }
+        },
+        active: { type: Boolean, default: false }
     }, {
         timestamps: true
     });

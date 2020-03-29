@@ -1,0 +1,6 @@
+<mat-chip-list>
+    <mat-chip class="active-chip" [color]="data.color" selected (click)="toggle()">
+        {{ data.label }}
+        <mat-icon>{{ data.icon }}</mat-icon>
+    </mat-chip>
+</mat-chip-list>

@@ -1,0 +1,21 @@
+<app-dialog [isSaving]="isSaving">
+    <h2 appDialogTitle>Händler löschen</h2>
+
+    <p>Wollen Sie diesen Händler wirklich löschen?</p>
+
+    <div appDialogActions>
+        <button mat-button
+                mat-stroked-button
+                appDialogAction
+                (click)="onCancel()">
+            Abbrechen
+        </button>
+        <button mat-button
+                mat-flat-button
+                appDialogAction
+                color="warn"
+                (click)="onDelete()">
+            Löschen
+        </button>
+    </div>
+</app-dialog>
