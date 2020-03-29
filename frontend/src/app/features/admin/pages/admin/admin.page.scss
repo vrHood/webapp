@@ -1,73 +1,105 @@
+@import '../scss/styles';
+
 app-admin-page {
     display: block;
 }
 
 .app-admin-page {
-    display: flex;
-    flex-direction: row;
     height: 100%;
 
-    .app-admin-page__menu {
-        display: flex;
-        align-items: flex-end;
-        flex-direction: column;
-        flex: 0 0 40%;
-        background-color: teal;
+    mat-sidenav-container {
+        height: 100%;
 
-        .menu__list {
-            width: 60%;
-            margin: 196px 0 196px 48px;
+        .app-admin-page__menu {
+            align-items: flex-end;
+            background-color: $color-primary;
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            min-width: 400px;
+            width: 30%;
 
-            .menu__item {
-                cursor: pointer;
-                color: white;
-                border-radius: 8px 0 0 8px;
-                height: 4rem;
-                margin: 1rem 0;
-                font-weight: 200;
-                font-size: 1.5rem;
-                padding: 0.5rem 0;
-                border: 4px solid transparent;
+            @media (max-width: 1440px) {
+                width: 25%;
 
-                &:hover {
-                    background-color: rgba(white, 0.1);
+                .menu__list {
+                    margin: 48px 0 96px 24px !important;
                 }
+            }
 
-                &:active {
-                    background-color: rgba(white, 0.2);
-                }
+            @media (max-width: 1200px) {
+                width: 400px;
+                max-width: calc(100% - 48px);
+                min-width: 200px;
+            }
 
-                &:focus {
-                    outline: none;
-                    border: 4px solid rgba(white, 0.4);
-                }
+            .menu__logo {
+                margin: 48px;
+                width: 40%;
+            }
 
-                &.menu__item--active {
-                    background-color: rgba(white, 0.2);
-                }
+            .menu__list {
+                margin: 96px 0 192px 48px;
 
-                .mat-list-item-content {
-                    margin: 0 0.75rem;
+                .menu__item {
+                    cursor: pointer;
+                    color: white;
+                    border-radius: 8px 0 0 8px;
+                    margin: 16px 0;
+                    font-weight: 200;
+                    font-size: 1.5rem;
+                    border: 4px solid transparent;
+                    height: 72px;
 
-                    .item__spread {
-                        flex: 1 1 100%;
+                    &:hover {
+                        background-color: rgba(white, 0.1);
                     }
 
-                    .mat-list-text {
-                        margin: 0 8px;
+                    &:active {
+                        background-color: rgba(white, 0.2);
                     }
 
-                    .mat-icon {
-                        height: 32px;
-                        width: 32px;
-                        font-size: 32px;
+                    &:focus {
+                        outline: none;
+                        border: 4px solid rgba(white, 0.4);
+                    }
+
+                    &.menu__item--active {
+                        background-color: rgba(white, 0.2);
+                    }
+
+                    .mat-list-item-content {
+                        margin: -4px 0.75rem 0 0.75rem;
+
+                        .item__spread {
+                            flex: 1 1 auto;
+                        }
+
+                        .mat-list-text {
+                            margin: 0 8px;
+                        }
+
+                        .mat-icon {
+                            height: 32px;
+                            width: 32px;
+                            font-size: 32px;
+                        }
                     }
                 }
             }
         }
-    }
 
-    .app-admin-page__content {
-        flex: 0 0 60%;
+        .app-admin-page__content {
+            background-color: white;
+            flex: 0 0 60%;
+
+            mat-toolbar {
+                background-color: white;
+
+                .space {
+                    flex: 1 1 auto;
+                }
+            }
+        }
     }
 }

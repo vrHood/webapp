@@ -1,8 +1,8 @@
-<div *ngIf="parent" [routerLink]="parent.route">
-    <mat-icon>back</mat-icon>
-    <span>{{ parent.label }}</span>
-</div>
+<button mat-button *ngIf="parent" [routerLink]="parent.route">
+    <mat-icon>arrow_backward</mat-icon>
+    {{ parent.label }}
+</button>
 
-<ng-contenet select="app-page-layout-header"></ng-contenet>
+<ng-content select="app-page-layout-header"></ng-content>
 
 <ng-content></ng-content>

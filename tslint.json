@@ -74,7 +74,8 @@
         ],
         "no-inferrable-types": [
             true,
-            "ignore-params"
+            "ignore-params",
+            "ignore-properties"
         ],
         "no-non-null-assertion": true,
         "no-switch-case-fall-through": true,

@@ -1,0 +1,211 @@
+{
+    "APP": {
+        "TITLE": "vr*Hood"
+    },
+    "MODEL": {
+        "DELIVERY_AREA": {
+            "VALUE": {
+                "CITY": "Stadtgebiet",
+                "COUNTY": "Landkreis",
+                "NATIONAL": "Bundesweit",
+                "OTHER": "Sonstiges"
+            },
+            "NAME": "Liefergebiet"
+        },
+        "ORDER_TYPE": {
+            "VALUE": {
+                "PHONE": "Telefon",
+                "EMAIL": "E-Mail",
+                "ONLINE_SHOP": "Online Shop",
+                "SOCIAL_MEDIA": "Social Media",
+                "WHATS_APP": "WhatsApp",
+                "OTHER": "Sonstiges"
+            },
+            "NAME": "Bestellart"
+        },
+        "PAYMENT_TYPE": {
+            "VALUE": {
+                "INVOICE": "auf Rechnung",
+                "PREPAYMENT": "Vorkasse / Überweisung",
+                "DIRECT_TRANSFER": "Sofortüberweisung",
+                "CREDIT_CARD": "Kreditkarte",
+                "PAY_PAL": "PayPal",
+                "GOOGLE_PAY": "Google Pay",
+                "APPLE_PAY": "Apple Pay",
+                "OTHER": "Sonstiges"
+            },
+            "NAME": "Zahlungsart"
+        },
+        "RETAILER": {
+            "PROPERTIES": {
+                "LOCATION": "Adresse",
+                "PHONE": "Telefon (Festnetz)",
+                "MOBILE": "Telefon (Mobil)",
+                "FAX": "Fax",
+                "EMAIL": "E-Mail",
+                "WEBSITE": "Webseite",
+                "FACEBOOK": "Facebook",
+                "INSTAGRAM": "Instagram",
+                "DESCRIPTION": "Description",
+                "OFFER": "Angebot",
+                "ORDER_TYPES": "Bestellarten",
+                "PAYMENT_TYPES": "Zahlungsarten",
+                "DELIVERY_AREAS": "Liefergebiete",
+                "TAGS": "Tags"
+            },
+            "NAME": "Händler"
+        }
+    },
+    "FEATURES": {
+        "ADMIN": {
+
+        },
+        "AUTH": {
+
+        },
+        "CATEGORY": {
+
+        },
+        "CONTENT": {
+
+        },
+        "RETAILER": {
+            "DIALOGS": {
+                "EDIT": {
+                    "ACTION": {
+                        "CANCEL": "Abbrechen",
+                        "SAVE": "Speichern"
+                    },
+                    "TITLE": "Händler bearbeiten",
+                    "FIELD": {
+                        "NAME": {
+                            "LABEL": "Name"
+                        },
+                        "WEBSITE": {
+                            "LABEL": "Webseite"
+                        },
+                        "FACEBOOK": {
+                            "LABEL": "Facebook"
+                        },
+                        "INSTAGRAM": {
+                            "LABEL": "Instagram"
+                        },
+                        "PHONE": {
+                            "LABEL": "Telefon (Festnetz)"
+                        },
+                        "MOBILE": {
+                            "LABEL": "Telefon (Mobil)"
+                        },
+                        "FAX": {
+                            "LABEL": "Fax"
+                        },
+                        "EMAIL": {
+                            "LABEL": "E-Mail"
+                        },
+                        "DESCRIPTION": {
+                            "LABEL": "Beschreibung"
+                        },
+                        "OFFER": {
+                            "LABEL": "Angebot"
+                        },
+                        "ORDER_TYPES": {
+                            "LABEL": "Bestellarten"
+                        },
+                        "OTHER_ORDER_TYPES": {
+                            "LABEL": "Weitere Bestellarten"
+                        },
+                        "PAYMENT_TYPES": {
+                            "LABEL": "Zahlungsarten"
+                        },
+                        "OTHER_PAYMENT_TYPES": {
+                            "LABEL": "Weitere Zahlungsarten"
+                        },
+                        "DELIVERY_AREAS": {
+                            "LABEL": "Liefergebiete"
+                        },
+                        "OTHER_DELIVERY_AREAS": {
+                            "LABEL": "Weitere Liefergebiete"
+                        },
+                        "TAGS": {
+                            "LABEL": "Tags"
+                        }
+                    },
+                    "GROUP": {
+                        "ADDRESS": {
+                            "TITLE": "Adresse"
+                        },
+                        "CONTACT": {
+                            "TITLE": "Kontakt"
+                        },
+                        "DESCRIPTION": {
+                            "TITLE": "Beschreibung"
+                        },
+                        "ORDER_INFORMATION": {
+                            "TITLE": "Bestellinformationen"
+                        }
+                    }
+                },
+                "CREATE": {
+                    "TITLE": "Händler erstellen"
+                },
+                "DELETE": {
+                    "HINT": {
+                        "DELETE": "Wollen Sie diesen Händler wirklich löschen?"
+                    },
+                    "FEEDBACK": {
+                        "SUCCESS": "Der Händler wurde erfolgreich gelöscht",
+                        "ERROR": "Beim Löschen des Händlers ist ein Fehler aufgetreten"
+                    },
+                    "TITLE": "Händler löschen"
+                }
+            },
+            "PAGES": {
+                "DETAIL": {
+                    "ACTION": {
+                        "EDIT": "Bearbeiten",
+                        "DELETE": "Löschen",
+                        "PARENT": "Händler"
+                    },
+                    "TABS": {
+                        "INFO": {
+                            "SECTION": {
+                                "ADDRESS": "Adresse",
+                                "PHONE": "Telefon",
+                                "FAX": "Fax",
+                                "EMAIL": "E-Mail",
+                                "WEBSITE": "Webseite",
+                                "FACEBOOK": "Facebook",
+                                "INSTAGRAM": "Instagram",
+                                "DESCRIPTION": "Description",
+                                "OFFER": "Angebot",
+                                "ORDER_TYPES": "Bestellarten",
+                                "PAYMENT_TYPES": "Zahlungsarten",
+                                "DELIVERY_AREAS": "Liefergebiete",
+                                "TAGS": "Tags"
+                            }
+                        }
+                    }
+                },
+                "LIST": {
+                    "ACTION": {
+                        "ADD": "Hinzufügen"
+                    },
+                    "COLUMN": {
+                        "NAME": "Name",
+                        "EMAIL": "E-Mail"
+                    },
+                    "TITLE": "Händler"
+                }
+            }
+        },
+        "USER": {
+
+        }
+    },
+    "SHARED": {
+        "ACTIVE_TOGGLE": {
+            "ACTIVE": "Aktiv",
+            "INACTIVE": "Inaktiv"
+        }
+    }
+}

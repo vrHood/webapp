@@ -1,10 +1,16 @@
-<form [formGroup]="form" (submit)="onSubmit()">
-    <mat-form-field>
-        <input matInput type="email" formControlName="email">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput type="password" formControlName="password">
-    </mat-form-field>
+<div class="app-login-page__container">
+    <h1 class="app-login-page__title">Anmelden</h1>
+    <form [formGroup]="form" (submit)="onSubmit()">
+        <mat-form-field appearance="outline">
+            <mat-label>E-Mail *</mat-label>
+            <input matInput type="email" formControlName="email">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Passwort *</mat-label>
+            <input matInput type="password" formControlName="password">
+        </mat-form-field>
 
-    <button mat-button type="submit">Anmelden</button>
-</form>
+        <button mat-button mat-flat-button type="submit" color="primary" class="full-width">Anmelden</button>
+    </form>
+
+</div>

@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
+import { IMenuItem } from '../../../../models/menu-item.model.i';
+
 @Component({
     selector: 'app-page-layout',
     templateUrl: './page-layout.component.html',
@@ -13,7 +15,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } 
 export class PageLayoutComponent implements OnInit {
 
     @Input()
-    parent: any;
+    parent: IMenuItem;
 
     constructor() {
     }

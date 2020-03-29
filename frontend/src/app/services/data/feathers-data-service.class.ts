@@ -1,6 +1,6 @@
 import { Application, Paginated, Service } from '@feathersjs/feathers';
 import { IBaseEntity } from '@vrhood/shared';
-import { remove as _remove, omit as _omit } from 'lodash';
+import { omit as _omit, remove as _remove } from 'lodash';
 import { fromEvent, merge, Observable, of } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { filter, map, mergeMap, scan, shareReplay, startWith, switchMap, takeUntil } from 'rxjs/operators';
@@ -31,7 +31,7 @@ export class FeathersDataService<T extends IBaseEntity> extends DataService<T> {
     }
 
     get(id: string, params?: any): Observable<T> {
-        const filterQuery = params && params.query ? sift(_omit(params.query, TOP_LEVEL_OPERATORS)) : (() => true);
+        const filterQuery = params && params.query ? sift(_omit(params.query, TOP_LEVEL_OPERATORS) as any) : (() => true);
 
         function filterData(data: T): boolean {
             if (!data || id !== id) {
@@ -59,7 +59,7 @@ export class FeathersDataService<T extends IBaseEntity> extends DataService<T> {
 
     find(params?: any): Observable<T[]> | Observable<Paginated<T>> {
 
-        const filterQuery = params && params.query ? sift(_omit(params.query, TOP_LEVEL_OPERATORS)) : (() => true);
+        const filterQuery = params && params.query ? sift(_omit(params.query, TOP_LEVEL_OPERATORS) as any) : (() => true);
 
         function unPack(data: T | T[]): Observable<T> {
             if (Array.isArray(data)) {
@@ -103,7 +103,7 @@ export class FeathersDataService<T extends IBaseEntity> extends DataService<T> {
 
         const events$ = merge(changed$, created$, removed$);
 
-        return merge(fromPromise(this._service.find(params)), events$)
+        return fromPromise(this._service.find(params))
             .pipe(
                 switchMap((result: T[] | Paginated<T>) => {
                     if (Array.isArray(result)) {

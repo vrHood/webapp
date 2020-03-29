@@ -1,4 +1,4 @@
-import { IRetailer } from '@vrhood/shared';
+import { DeliveryArea, EnumUtils, IRetailer, OrderType, PaymentType } from '@vrhood/shared';
 
 import { Application, ModelName } from '../declarations';
 
@@ -35,7 +35,14 @@ export default function (app: Application) {
         offer: { type: String },
         description: { type: String },
         logo: { type: fileReferenceSchema },
-        introVideo: { type: fileReferenceSchema }
+        introVideo: { type: fileReferenceSchema },
+        orderTypes: [ { type: String, enum: EnumUtils.getValues(OrderType) } ],
+        otherOrderType: { type: String },
+        paymentTypes: [ { type: String, enum: EnumUtils.getValues(PaymentType) } ],
+        otherPaymentType: { type: String },
+        deliveryAreas: [ { type: String, enum: EnumUtils.getValues(DeliveryArea) } ],
+        otherDeliveryArea: { type: String },
+        active: { type: Boolean, default: false }
     }, {
         timestamps: true
     });

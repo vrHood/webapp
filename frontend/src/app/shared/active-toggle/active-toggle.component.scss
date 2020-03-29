@@ -1,0 +1,17 @@
+app-active-toggle {
+    display: block;
+}
+
+.app-active-toggle {
+
+    mat-chip-list {
+        display: block;
+
+        mat-chip.active-chip {
+            width: 100px;
+            display: flex;
+            justify-content: space-between;
+            transition: background-color 300ms ease;
+        }
+    }
+}

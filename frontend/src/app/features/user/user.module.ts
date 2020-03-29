@@ -12,13 +12,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
+import { AppActiveToggleModule } from '../../shared/active-toggle/active-toggle.module';
+import { AppPageLayoutModule } from '../../shared/page-layout/page-layout.module';
 
-import { OverviewModule } from '../../shared/overview/overview.module';
-import { PageLayoutModule } from '../../shared/page-layout/page-layout.module';
+import { AppTableModule } from '../../shared/table/table.module';
+import { UserEditDialogComponent } from './dialogs/edit/user-edit-dialog.component';
 
-import { UserDetailComponent } from './components/user-detail/user-detail.component';
-import { UserListComponent } from './components/user-list/user-list.component';
-import { UserEditDialogComponent } from './dialogs/user-create/user-edit-dialog.component';
+import { UserDetailPage } from './pages/detail/user-detail.page';
+import { UserOverviewPage } from './pages/overview/user-overview.page';
 import { USER_ROUTES } from './user.routes';
 
 @NgModule({
@@ -36,12 +37,13 @@ import { USER_ROUTES } from './user.routes';
         MatInputModule,
         MatSelectModule,
 
-        OverviewModule,
-        PageLayoutModule,
+        AppTableModule,
+        AppPageLayoutModule,
         MatProgressSpinnerModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        AppActiveToggleModule
     ],
-    declarations: [ UserDetailComponent, UserListComponent, UserEditDialogComponent ]
+    declarations: [ UserDetailPage, UserOverviewPage, UserEditDialogComponent ]
 })
 export class UserModule {
 

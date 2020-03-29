@@ -1,0 +1,30 @@
+app-login-page {
+    display: block;
+}
+
+.app-login-page {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 192px 48px 48px 0;
+
+    .app-login-page__container {
+        max-width: 400px;
+        width: 100%;
+
+        .app-login-page__title {
+            width: 100%;
+            text-align: center;
+        }
+
+        mat-form-field {
+            width: 100%;
+        }
+
+        button.full-width {
+            width: 100%;
+        }
+    }
+
+}

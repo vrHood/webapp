@@ -1,17 +1,31 @@
+<div class="app-content-page__banner" *ngIf="(activeUser$ | async) as activeUser">
+    <span class="banner__info">angemeldet als: {{ activeUser.email }}</span>
+    <a mat-button class="banner__link" routerLink="/admin">zur Verwaltung
+        <mat-icon>settings</mat-icon>
+    </a>
+    <button mat-button class="banner__link" (click)="logout()">Abmelden
+        <mat-icon>exit_to_app</mat-icon>
+    </button>
+</div>
+
 <mat-sidenav-container>
 
     <mat-sidenav-content>
 
+        <div class="app-content-page__logo">
+            <img src="../assets/images/vrhood-logo-white.svg"/>
+        </div>
+
         <router-outlet></router-outlet>
 
-        <div class="app-content-page__map">
+        <div class="app-content-page__map placeholder">
             Map
         </div>
 
     </mat-sidenav-content>
 
     <mat-sidenav mode="side" position="end" opened>
-        <div class="app-content-page__categories">
+        <div class="app-content-page__categories placeholder">
             Categories
         </div>
     </mat-sidenav>

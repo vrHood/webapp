@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,10 +12,11 @@ import { PageLayoutHeaderTitleDirective } from './directives/page-layout-header-
 
 @NgModule({
     imports: [
-        MatIconModule,
+        CommonModule,
         RouterModule,
-        MatButtonModule
 
+        MatButtonModule,
+        MatIconModule
     ],
     declarations: [
         PageLayoutComponent,
@@ -31,6 +33,6 @@ import { PageLayoutHeaderTitleDirective } from './directives/page-layout-header-
         PageLayoutHeaderActionDirective
     ]
 })
-export class PageLayoutModule {
+export class AppPageLayoutModule {
 
 }

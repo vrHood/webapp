@@ -1,0 +1,16 @@
+snack-bar-container.c-snackbar {
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+    padding: 14px 24px;
+
+    &.c-snackbar--success {
+        background-color: $color-primary;
+    }
+
+    &.c-snackbar--error {
+        background-color: $color-error;
+    }
+
+}
+
