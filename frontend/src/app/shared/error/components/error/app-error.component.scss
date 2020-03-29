@@ -1,0 +1,33 @@
+@import '~@angular/material/theming';
+
+$warn: mat-color(mat-palette($mat-red));
+
+app-error {
+    display: block;
+}
+
+.app-error {
+
+    .app-error__inner {
+        background: transparentize($warn, 0.85);
+        border-radius: 0.25rem;
+        display: inline-block;
+        color: $warn;
+        padding: 1rem 1.5rem;
+
+        .app-error__title {
+            font: {
+                size: 1rem;
+                weight: 600;
+            }
+
+            + .app-error__message {
+                margin-top: 0.25rem;
+            }
+        }
+
+        .app-error__message {
+            font-size: 0.9375rem;
+        }
+    }
+}
