@@ -1,0 +1,26 @@
+app-footer {
+    display: block;
+}
+
+.app-footer {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.5rem;
+
+    > * {
+        margin: 0 0.5rem;
+    }
+
+    a {
+        color: inherit;
+        font-size: 0.875rem;
+        opacity: 0.5;
+        text-decoration: none;
+        transition: opacity 300ms ease-out;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}

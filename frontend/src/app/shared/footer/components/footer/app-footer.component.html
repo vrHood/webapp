@@ -1,0 +1,4 @@
+<ng-container *ngFor="let link of links" [ngSwitch]="link.type">
+    <a *ngSwitchCase="'internal'" [routerLink]="link.route">{{ link.label }}</a>
+    <a *ngSwitchCase="'external'" [href]="link.url" target="_blank">{{ link.label }}</a>
+</ng-container>
