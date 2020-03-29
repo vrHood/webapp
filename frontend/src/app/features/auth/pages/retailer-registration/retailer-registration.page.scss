@@ -11,6 +11,7 @@ app-retailer-registration {
     .app-retailer-registration__form-column {
 
         @include mq(tablet-lg) {
+            height: 100%;
             min-height: 100vh;
         }
     }
