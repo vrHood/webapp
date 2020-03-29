@@ -1,0 +1,263 @@
+<form [formGroup]="form">
+
+    <div class="app-retailer-registration-form__header o-grid o-grid--align-vertical-center o-grid--align-space-between">
+        <h2 class="o-cell u-auto">Händler-Registrierung</h2>
+        <div class="app-retailer-registration-form__progress o-cell u-auto">
+            <span class="u-d-none u-d-inline-block@mobile">Schritt</span>
+            {{ currentStepNumber }}/{{ stepCount }}
+        </div>
+    </div>
+
+    <mat-tab-group class="app-retailer-registration-form__steps"
+                   [dynamicHeight]="true"
+                   [(selectedIndex)]="selectedStepIndex">
+        <mat-tab label="1">
+
+            <h3>Account-Informationen</h3>
+
+            <div formGroupName="account">
+
+                <mat-form-field *ngIf="getFormControl('account', 'email') as control"
+                                appearance="outline">
+                    <mat-label>E-Mail-Adresse *</mat-label>
+                    <input matInput
+                           formControlName="email"
+                           [errorStateMatcher]="errorStateMatcher" />
+                    <mat-error *ngIf="control.hasError('email') && !control.hasError('required')">
+                        Bitte geben Sie eine gültige E-Mail-Adresse an
+                    </mat-error>
+                    <mat-error *ngIf="control.hasError('required')">
+                        Bitte geben Sie eine E-Mail-Adresse an
+                    </mat-error>
+                </mat-form-field>
+
+                <div *ngIf="getFormControl('account', 'dataUsageAccepted') as control" class="c-form-checkbox">
+                    <mat-checkbox formControlName="dataUsageAccepted"
+                                  color="primary">
+                        Ich bin mit der Verwendung meiner Daten und der Datenschutzerklärung einverstanden *
+                    </mat-checkbox>
+                    <mat-error *ngIf="isErrorState(control) && control.hasError('required')">
+                        Bitte akzeptieren Sie die Bedingungen
+                    </mat-error>
+                </div>
+
+            </div>
+
+        </mat-tab>
+        <mat-tab label="2">
+
+            <h3>Grundlegende Angaben zu Ihrem Einzelhandel</h3>
+
+            <div formGroupName="basic">
+
+                <mat-form-field *ngIf="getFormControl('basic', 'name') as control"
+                                appearance="outline">
+                    <mat-label>Name Ihres Einzelhandels *</mat-label>
+                    <input matInput
+                           formControlName="name"
+                           [errorStateMatcher]="errorStateMatcher" />
+                    <mat-error *ngIf="control.hasError('required')">
+                        Pflichtfeld
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="getFormControl('basic', 'branches') as control"
+                                appearance="outline">
+                    <mat-label>Welchem Branchenzweig würden Sie Ihren Laden zuordnen? *</mat-label>
+                    <mat-select formControlName="branches"
+                                multiple
+                                [errorStateMatcher]="errorStateMatcher">
+                        <mat-option *ngFor="let branch of branches" [value]="branch">{{ branch }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="control.hasError('required')">
+                        Pflichtfeld
+                    </mat-error>
+                </mat-form-field>
+
+                <div formGroupName="address">
+
+                    <div class="app-retailer-registration-form__form-row o-grid">
+
+                        <div class="o-cell u-3/4">
+
+                            <mat-form-field *ngIf="getFormControl('basic', 'address', 'street') as control"
+                                            appearance="outline">
+                                <mat-label>Straße *</mat-label>
+                                <input matInput
+                                       formControlName="street"
+                                       [errorStateMatcher]="errorStateMatcher" />
+                                <mat-error *ngIf="control.hasError('required')">
+                                    Pflichtfeld
+                                </mat-error>
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="o-cell u-1/4">
+
+                            <mat-form-field *ngIf="getFormControl('basic', 'address', 'houseNumber') as control"
+                                            appearance="outline">
+                                <mat-label>Hausnr. *</mat-label>
+                                <input matInput
+                                       formControlName="houseNumber"
+                                       [errorStateMatcher]="errorStateMatcher" />
+                                <mat-error *ngIf="control.hasError('required')">
+                                    Pflichtfeld
+                                </mat-error>
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                    <div class="app-retailer-registration-form__form-row o-grid">
+
+                        <div class="o-cell u-1/4">
+
+                            <mat-form-field *ngIf="getFormControl('basic', 'address', 'zip') as control"
+                                            appearance="outline">
+                                <mat-label>PLZ *</mat-label>
+                                <input matInput
+                                       formControlName="zip"
+                                       [errorStateMatcher]="errorStateMatcher" />
+                                <mat-error *ngIf="control.hasError('required')">
+                                    Pflichtfeld
+                                </mat-error>
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="o-cell u-3/4">
+
+                            <mat-form-field *ngIf="getFormControl('basic', 'address', 'city') as control"
+                                            appearance="outline">
+                                <mat-label>Ort *</mat-label>
+                                <input matInput
+                                       formControlName="city"
+                                       [errorStateMatcher]="errorStateMatcher" />
+                                <mat-error *ngIf="control.hasError('required')">
+                                    Pflichtfeld
+                                </mat-error>
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </mat-tab>
+        <mat-tab label="3">
+
+            <h3>Kontaktmöglichkeiten für Ihre Kunden</h3>
+
+            <div formGroupName="contact">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>E-Mail-Adresse</mat-label>
+                    <input matInput formControlName="email" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Festnetznummer</mat-label>
+                    <input matInput formControlName="phone" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Mobil</mat-label>
+                    <input matInput formControlName="mobilePhone" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>WhatsApp (Telefonnummer)</mat-label>
+                    <input matInput formControlName="whatsapp" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Webseite (Link)</mat-label>
+                    <input matInput formControlName="website" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Facebook (Link)</mat-label>
+                    <input matInput formControlName="facebook" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Instagram (Link)</mat-label>
+                    <input matInput formControlName="instagram" />
+                </mat-form-field>
+
+            </div>
+
+        </mat-tab>
+        <mat-tab label="4">
+
+            <h3>Welche Produkte bieten Sie an?</h3>
+
+            <div formGroupName="products">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Erzählen Sie uns von Ihrem Geschäft</mat-label>
+                    <textarea matInput
+                              cdkTextareaAutosize
+                              cdkAutosizeMinRows="3"
+                              formControlName="businessDescription"></textarea>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Beschreiben Sie Ihr Sortiment</mat-label>
+                    <textarea matInput
+                              cdkTextareaAutosize
+                              cdkAutosizeMinRows="3"
+                              formControlName="productsDescription"
+                              placeholder="Welche Produkte bieten Sie an?"></textarea>
+                </mat-form-field>
+
+            </div>
+
+        </mat-tab>
+        <mat-tab label="5">
+
+            <h3>Wie bestelle ich bei Ihnen?</h3>
+
+            <div formGroupName="order">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Wie soll die Bestellung bei Ihnen eingehen?</mat-label>
+                    <mat-select formControlName="contactOptions" multiple>
+                        <mat-option *ngFor="let option of contactOptions" [value]="option">{{ option }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Wie kann ich bei Ihnen bezahlen?</mat-label>
+                    <mat-select formControlName="paymentOptions" multiple>
+                        <mat-option *ngFor="let option of paymentOptions" [value]="option">{{ option }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Wie weit können Sie liefern?</mat-label>
+                    <mat-select formControlName="deliveryOptions" multiple>
+                        <mat-option *ngFor="let option of deliveryOptions" [value]="option">{{ option }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+
+        </mat-tab>
+    </mat-tab-group>
+
+    <div class="app-retailer-registration-form__actions">
+        <button *ngIf="hasPreviousStep" class="app-retailer-registration-form__previous" mat-button (click)="showPreviousStep()">Zurück</button>
+        <button *ngIf="hasNextStep; else submitButton" class="app-retailer-registration-form__next" mat-raised-button color="primary" (click)="showNextStep()">Weiter</button>
+        <ng-template #submitButton>
+            <button lass="app-retailer-registration-form__submit" mat-raised-button color="primary" (click)="submit()">Absenden</button>
+        </ng-template>
+        <div class="app-retailer-registration-form__hint">* Pflichtfelder</div>
+    </div>
+
+</form>

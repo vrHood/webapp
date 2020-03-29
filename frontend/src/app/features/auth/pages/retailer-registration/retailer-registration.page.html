@@ -1,0 +1,62 @@
+<div class="o-grid o-grid--no-gutters o-grid--column o-grid--row@tablet-lg">
+
+    <div class="o-cell u-auto u-1/2@tablet-lg u-4/9@desktop-lg u-2/5@desktop-xl">
+        <div class="app-retailer-registration__intro-column">
+
+            <a href="/" class="app-retailer-registration__logo">
+                <img src="assets/images/vrhood-logo-white.svg" alt="vr*Hood" />
+            </a>
+
+            <div class="app-retailer-registration__intro">
+                <h1>Willkommen bei <br />vr*Hood!</h1>
+                <p>
+                    vr*hood ist eine Online-Plattform und möchte Ihnen als Einzelhändler die Möglichkeit bieten
+                    weiterhin den Kontakt mit Ihren Stammkunden zu halten und sie über aktuelle Aktionen und
+                    Bestellmöglichkeiten zu informieren. Außerdem möchten wir Sie auch dabei unterstützen neue Kunden
+                    dazu zugewinnen. So wollen wir dazu beitragen auch wegfallende Einnahmen aus Tourismus oder
+                    Schaufensterbummeln am Wochenende so gut wie möglich zu kompensieren.
+                </p>
+                <p>
+                    Wir bauen dabei nicht auf einen Onlineshop, sondern wollen das Bummeln und Entdecken von Läden
+                    ermöglichen. Wir sehen uns als Bindeglied zwischen Einzelhandel und dem Kunden. Wir bieten Ihnen
+                    eine Plattform und Sichtbarkeit.
+                </p>
+                <p>
+                    Die Bestellungen passieren weiterhin über Ihre bestehenden Vertriebskanäle, wie Ihrem eigenen
+                    Online-Shop, einer telefonischen Beratung oder einer Präsentation auf den Sozialen Medien. Sie
+                    entscheiden wie Ihr Kundenkontakt aussieht!
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="o-cell u-auto u-1/2@tablet-lg u-5/9@desktop-lg u-3/5@desktop-xl">
+        <div class="app-retailer-registration__form-column">
+
+            <!--<h2>Händler-Registrierung</h2>-->
+
+            <app-retailer-registration-form [ngClass]="{ 'u-d-none': !isFormView }" (result)="onFormSubmit($event)" (error)="onFormError($event)"></app-retailer-registration-form>
+
+            <div *ngIf="isLoadingView" class="app-retailer-registration__loading">
+                <mat-progress-spinner mode="indeterminate" color="accent" diameter="50"></mat-progress-spinner>
+            </div>
+
+            <div *ngIf="isErrorView" class="app-retailer-registration__error">
+                <app-error *ngIf="error" [title]="error.title" [message]="error.message"></app-error>
+                <button class="app-retailer-registration__back-to-form" mat-button (click)="showFormView()">Zurück zum Formular</button>
+            </div>
+
+            <div *ngIf="isSuccessView" class="app-retailer-registration__success">
+                <h2>Vielen Dank!</h2>
+                <p>
+                    Wir haben Ihre Registrierung erhalten und prüfen diese in Kürze.
+                </p>
+            </div>
+
+            <app-footer></app-footer>
+
+        </div>
+    </div>
+
+</div>
