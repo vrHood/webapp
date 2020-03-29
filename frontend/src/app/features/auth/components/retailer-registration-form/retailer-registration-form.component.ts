@@ -121,7 +121,7 @@ export class RetailerRegistrationFormComponent implements OnInit {
     }
 
     getFormStep(key: string): IRetailerRegistrationFormStep {
-        return _find(this._steps, { type: RetailerRegistrationStepType.FORM, key });
+        return _find(this._steps, { type: RetailerRegistrationStepType.FORM, key }) as IRetailerRegistrationFormStep;
     }
 
     getFormStepIndex(key: string): number {
@@ -129,7 +129,7 @@ export class RetailerRegistrationFormComponent implements OnInit {
     }
 
     getConfirmationStep(): IRetailerRegistrationConfirmationStep {
-        return _find(this._steps, { type: RetailerRegistrationStepType.CONFIRMATION });
+        return _find(this._steps, { type: RetailerRegistrationStepType.CONFIRMATION }) as IRetailerRegistrationConfirmationStep;
     }
 
     getConfirmationStepIndex(): number {
