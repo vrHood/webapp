@@ -2,18 +2,18 @@
 
     <div class="app-retailer-registration-form__header o-grid o-grid--align-vertical-center o-grid--align-space-between">
         <h2 class="o-cell u-auto">Händler-Registrierung</h2>
-        <div class="app-retailer-registration-form__progress o-cell u-auto">
+        <div *ngIf="isFormStep" class="app-retailer-registration-form__progress o-cell u-auto">
             <span class="u-d-none u-d-inline-block@mobile">Schritt</span>
-            {{ currentStepNumber }}/{{ stepCount }}
+            {{ currentStepNumber }}/{{ formStepCount }}
         </div>
     </div>
 
     <mat-tab-group class="app-retailer-registration-form__steps"
                    [dynamicHeight]="true"
-                   [(selectedIndex)]="selectedStepIndex">
-        <mat-tab label="1">
+                   [(selectedIndex)]="currentStepIndex">
+        <mat-tab *ngIf="getFormStep('account') as step" [label]="step.label">
 
-            <h3>Account-Informationen</h3>
+            <h3>{{ step.label }}</h3>
 
             <div formGroupName="account">
 
@@ -44,9 +44,9 @@
             </div>
 
         </mat-tab>
-        <mat-tab label="2">
+        <mat-tab *ngIf="getFormStep('basic') as step" [label]="step.label">
 
-            <h3>Grundlegende Angaben zu Ihrem Einzelhandel</h3>
+            <h3>{{ step.label }}</h3>
 
             <div formGroupName="basic">
 
@@ -149,9 +149,9 @@
             </div>
 
         </mat-tab>
-        <mat-tab label="3">
+        <mat-tab *ngIf="getFormStep('contact') as step" [label]="step.label">
 
-            <h3>Kontaktmöglichkeiten für Ihre Kunden</h3>
+            <h3>{{ step.label }}</h3>
 
             <div formGroupName="contact">
 
@@ -193,9 +193,9 @@
             </div>
 
         </mat-tab>
-        <mat-tab label="4">
+        <mat-tab *ngIf="getFormStep('products') as step" [label]="step.label">
 
-            <h3>Welche Produkte bieten Sie an?</h3>
+            <h3>{{ step.label }}</h3>
 
             <div formGroupName="products">
 
@@ -219,9 +219,9 @@
             </div>
 
         </mat-tab>
-        <mat-tab label="5">
+        <mat-tab *ngIf="getFormStep('order') as step" [label]="step.label">
 
-            <h3>Wie bestelle ich bei Ihnen?</h3>
+            <h3>{{ step.label }}</h3>
 
             <div formGroupName="order">
 
@@ -249,15 +249,194 @@
             </div>
 
         </mat-tab>
+        <mat-tab label="Angaben prüfen">
+
+            <h3>Überprüfen Sie Ihre Angaben</h3>
+
+            <div class="app-retailer-registration-form__confirmation">
+
+                <ng-container *ngIf="getFormStep('account') as step">
+
+                    <div class="confirmation__header o-grid o-grid--align-vertical-center">
+                        <h4 class="o-cell u-auto">{{ step.label }}</h4>
+                        <button class="confirmation__edit o-cell u-auto" mat-icon-button color="primary" aria-label="Bearbeiten" (click)="showFormStep(step.key)">
+                            <mat-icon [inline]="true">create</mat-icon>
+                        </button>
+                    </div>
+
+                    <table>
+                        <tr *ngIf="getFormControl('account', 'email') as control">
+                            <th>E-Mail-Adresse</th>
+                            <td>{{ control.value }}</td>
+                        </tr>
+                    </table>
+
+                </ng-container>
+
+                <ng-container *ngIf="getFormStep('basic') as step">
+
+                    <div class="confirmation__header o-grid o-grid--align-vertical-center">
+                        <h4 class="o-cell u-auto">{{ step.label }}</h4>
+                        <button class="confirmation__edit o-cell u-auto" mat-icon-button color="primary" aria-label="Bearbeiten" (click)="showFormStep(step.key)">
+                            <mat-icon [inline]="true">create</mat-icon>
+                        </button>
+                    </div>
+
+                    <table>
+                        <tr *ngIf="getFormControl('basic', 'name') as control">
+                            <th>Name</th>
+                            <td>{{ control.value }}</td>
+                        </tr>
+                        <tr *ngIf="getFormControl('basic', 'branches') as control">
+                            <th>Welchem Branchenzweig würden Sie Ihren Laden zuordnen?</th>
+                            <td>
+                                <ul>
+                                    <li *ngFor="let item of control.value">{{ item }}</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr *ngIf="getFormGroup('basic', 'address') as control">
+                            <th>Anschrift</th>
+                            <td>
+                                {{ control.value?.street }} {{ control.value?.houseNumber }}<br />
+                                {{ control.value?.zip }} {{ control.value?.city }}
+                            </td>
+                        </tr>
+                    </table>
+
+                </ng-container>
+
+                <ng-container *ngIf="getFormStep('contact') as step">
+
+                    <div class="confirmation__header o-grid o-grid--align-vertical-center">
+                        <h4 class="o-cell u-auto">{{ step.label }}</h4>
+                        <button class="confirmation__edit o-cell u-auto" mat-icon-button color="primary" aria-label="Bearbeiten" (click)="showFormStep(step.key)">
+                            <mat-icon [inline]="true">create</mat-icon>
+                        </button>
+                    </div>
+
+                    <table>
+                        <tr *ngIf="getFormControl('contact', 'email') as control">
+                            <th>E-Mail-Adresse</th>
+                            <td>{{ control.value }}</td>
+                        </tr>
+                        <tr *ngIf="getFormControl('contact', 'phone') as control">
+                            <th>Festnetznummer</th>
+                            <td>{{ control.value }}</td>
+                        </tr>
+                        <tr *ngIf="getFormControl('contact', 'mobilePhone') as control">
+                            <th>Mobil</th>
+                            <td>{{ control.value }}</td>
+                        </tr>
+                        <tr *ngIf="getFormControl('contact', 'whatsapp') as control">
+                            <th>WhatsApp (Telefonnummer)</th>
+                            <td>{{ control.value }}</td>
+                        </tr>
+                        <tr *ngIf="getFormControl('contact', 'website') as control">
+                            <th>Webseite (Link)</th>
+                            <td>{{ control.value }}</td>
+                        </tr>
+                        <tr *ngIf="getFormControl('contact', 'facebook') as control">
+                            <th>Facebook (Link)</th>
+                            <td>{{ control.value }}</td>
+                        </tr>
+                        <tr *ngIf="getFormControl('contact', 'instagram') as control">
+                            <th>Instagram (Link)</th>
+                            <td>{{ control.value }}</td>
+                        </tr>
+                    </table>
+
+                </ng-container>
+
+                <ng-container *ngIf="getFormStep('products') as step">
+
+                    <div class="confirmation__header o-grid o-grid--align-vertical-center">
+                        <h4 class="o-cell u-auto">{{ step.label }}</h4>
+                        <button class="confirmation__edit o-cell u-auto" mat-icon-button color="primary" aria-label="Bearbeiten" (click)="showFormStep(step.key)">
+                            <mat-icon [inline]="true">create</mat-icon>
+                        </button>
+                    </div>
+
+                    <table>
+                        <tr *ngIf="getFormControl('products', 'businessDescription') as control">
+                            <th>Erzählen Sie uns von Ihrem Geschäft</th>
+                            <td>{{ control.value }}</td>
+                        </tr>
+                        <tr *ngIf="getFormControl('products', 'productsDescription') as control">
+                            <th>Beschreiben Sie Ihr Sortiment</th>
+                            <td>{{ control.value }}</td>
+                        </tr>
+                    </table>
+
+                </ng-container>
+
+                <ng-container *ngIf="getFormStep('order') as step">
+
+                    <div class="confirmation__header o-grid o-grid--align-vertical-center">
+                        <h4 class="o-cell u-auto">{{ step.label }}</h4>
+                        <button class="confirmation__edit o-cell u-auto" mat-icon-button color="primary" aria-label="Bearbeiten" (click)="showFormStep(step.key)">
+                            <mat-icon [inline]="true">create</mat-icon>
+                        </button>
+                    </div>
+
+                    <table>
+                        <tr *ngIf="getFormControl('order', 'contactOptions') as control">
+                            <th>Wie soll die Bestellung bei Ihnen eingehen?</th>
+                            <td>
+                                <ul>
+                                    <li *ngFor="let item of control.value">{{ item }}</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr *ngIf="getFormControl('order', 'paymentOptions') as control">
+                            <th>Wie kann ich bei Ihnen bezahlen?</th>
+                            <td>
+                                <ul>
+                                    <li *ngFor="let item of control.value">{{ item }}</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr *ngIf="getFormControl('order', 'deliveryOptions') as control">
+                            <th>Wie weit können Sie liefern?</th>
+                            <td>
+                                <ul>
+                                    <li *ngFor="let item of control.value">{{ item }}</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+
+                </ng-container>
+
+            </div>
+
+        </mat-tab>
     </mat-tab-group>
 
     <div class="app-retailer-registration-form__actions">
-        <button *ngIf="hasPreviousStep" class="app-retailer-registration-form__previous" mat-button (click)="showPreviousStep()">Zurück</button>
-        <button *ngIf="hasNextStep; else submitButton" class="app-retailer-registration-form__next" mat-raised-button color="primary" (click)="showNextStep()">Weiter</button>
+        <button *ngIf="hasPreviousStep" class="app-retailer-registration-form__previous" mat-button type="button" (click)="showPreviousStep()">Zurück</button>
+        <ng-container *ngIf="hasNextStep; else submitButton">
+            <button *ngIf="!nextStepIsConfirmation" class="app-retailer-registration-form__next"
+                    mat-raised-button
+                    color="primary"
+                    (click)="showNextStep()">
+                Weiter
+            </button>
+            <button *ngIf="isConfirmationStepEnabled"
+                    class="app-retailer-registration-form__verify"
+                    mat-raised-button color="primary"
+                    (click)="showConfirmationStep()">
+                Angaben prüfen
+            </button>
+        </ng-container>
         <ng-template #submitButton>
-            <button lass="app-retailer-registration-form__submit" mat-raised-button color="primary" (click)="submit()">Absenden</button>
+            <button class="app-retailer-registration-form__submit"
+                    mat-raised-button color="primary"
+                    (click)="submit()">
+                Absenden
+            </button>
         </ng-template>
-        <div class="app-retailer-registration-form__hint">* Pflichtfelder</div>
+        <div *ngIf="isFormStep" class="app-retailer-registration-form__hint">* Pflichtfelder</div>
     </div>
 
 </form>

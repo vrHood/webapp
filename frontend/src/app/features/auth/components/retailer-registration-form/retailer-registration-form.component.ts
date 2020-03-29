@@ -3,8 +3,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { IError } from '../../../../shared/error/models/error.model.i';
-import { IRetailerRegistrationFormStep } from '../../models/retailer-registration-form-step.model.i';
+import {
+    IRetailerRegistrationFormStep,
+    IRetailerRegistrationStep, IRetailerRegistrationConfirmationStep,
+    RetailerRegistrationStepType
+} from '../../models/retailer-registration-step.model.i';
 import { RetailerRegistrationFormErrorStateMatcher } from './retailer-registration-form-error-step-matcher';
+import { each as _each, find as _find, findIndex as _findIndex } from 'lodash';
 
 @Component({
     selector: 'app-retailer-registration-form',
@@ -57,39 +62,78 @@ export class RetailerRegistrationFormComponent implements OnInit {
     ];
 
     errorStateMatcher: ErrorStateMatcher = new RetailerRegistrationFormErrorStateMatcher();
-    selectedStepIndex: number = 0;
+    currentStepIndex: number;
+    allFormStepsSeen: boolean = false;
 
-    private _steps: IRetailerRegistrationFormStep[] = [];
+    private _steps: IRetailerRegistrationStep[] = [];
+    private _formStepCount: number = 0;
 
     constructor() {
     }
 
     get hasNextStep(): boolean {
-        return this.selectedStepIndex < (this._steps.length - 1);
+        return this.currentStepIndex < (this._steps.length - 1);
     }
 
     get hasPreviousStep(): boolean {
-        return this.selectedStepIndex > 0;
+        return this.currentStepIndex > 0;
     }
 
     get isCurrentStepValid(): boolean {
-        return this._isStepValid(this.selectedStepIndex);
+        return this._isStepValid(this.currentStepIndex);
     }
 
-    get stepCount(): number {
-        return this._steps.length;
+    get formStepCount(): number {
+        return this._formStepCount;
     }
 
     get currentStepNumber(): number {
-        return this.selectedStepIndex + 1;
+        return this.currentStepIndex + 1;
     }
 
-    get progress(): number {
-        return (this.currentStepNumber / this.stepCount) * 100;
+    get isFormStep(): boolean {
+        const currentStep = this._getCurrentStep();
+        return RetailerRegistrationStepType.FORM === currentStep.type;
+    }
+
+    get isConfirmationStep(): boolean {
+        const currentStep = this._getCurrentStep();
+        return RetailerRegistrationStepType.CONFIRMATION === currentStep.type;
+    }
+
+    get nextStepIsConfirmation(): boolean {
+        const nextStep = this._steps[this.currentStepIndex + 1];
+        return nextStep && RetailerRegistrationStepType.CONFIRMATION === nextStep.type;
+    }
+
+    get isFormValid(): boolean {
+        return this.form && this.form.valid;
+    }
+
+    get isConfirmationStepEnabled(): boolean {
+        return (this.isFormValid && this.allFormStepsSeen) || this.nextStepIsConfirmation;
     }
 
     ngOnInit(): void {
         this._initForm();
+        this._initSteps();
+        this.showStep(0);
+    }
+
+    getFormStep(key: string): IRetailerRegistrationFormStep {
+        return _find(this._steps, { type: RetailerRegistrationStepType.FORM, key });
+    }
+
+    getFormStepIndex(key: string): number {
+        return _findIndex(this._steps, { type: RetailerRegistrationStepType.FORM, key });
+    }
+
+    getConfirmationStep(): IRetailerRegistrationConfirmationStep {
+        return _find(this._steps, { type: RetailerRegistrationStepType.CONFIRMATION });
+    }
+
+    getConfirmationStepIndex(): number {
+        return _findIndex(this._steps, { type: RetailerRegistrationStepType.CONFIRMATION });
     }
 
     getFormControl(...path: string[]): FormControl {
@@ -97,43 +141,71 @@ export class RetailerRegistrationFormComponent implements OnInit {
         return control && control instanceof FormControl ? control : null;
     }
 
+    getFormGroup(...path: string[]): FormGroup {
+        const group = this.form.get(path);
+        return group && group instanceof FormGroup ? group : null;
+    }
+
     isErrorState(control: FormControl): boolean {
         return !!(control && control.invalid && (control.dirty || control.touched));
     }
 
-    showNextStep() {
-
-        const currentStep = this._getCurrentStep();
-
-        if (!currentStep) {
-            return;
-        }
-
-        if (currentStep.form) {
-
-            currentStep.form.markAllAsTouched();
-
-            if (!currentStep.form.valid) {
-                return;
-            }
-        }
-
-        if (this.hasNextStep) {
-            this.selectedStepIndex++;
+    showPreviousStep() {
+        if (this.hasPreviousStep) {
+            this.showStep(this.currentStepIndex - 1);
         }
     }
 
-    showPreviousStep() {
-        if (this.hasPreviousStep) {
-            this.selectedStepIndex--;
+    showNextStep() {
+
+        if (!this._isStepValid(this.currentStepIndex, true)) {
+            return;
         }
+
+        if (this.hasNextStep) {
+            this.showStep(this.currentStepIndex + 1);
+        }
+    }
+
+    showFormStep(key: string) {
+        this.showStep(this.getFormStepIndex(key));
+    }
+
+    showConfirmationStep() {
+
+        if (!this.isFormValid) {
+            return;
+        }
+
+        this.showStep(this.getConfirmationStepIndex());
+    }
+
+    showStep(index: number) {
+
+        if (index < 0 || index >= this._steps.length) {
+            return;
+        }
+
+        this.currentStepIndex = index;
+        this._steps[index].seen = true;
+
+        let allFormStepsSeen: boolean = true;
+
+        _each(this._steps, step => {
+            if (RetailerRegistrationStepType.FORM === step.type && !step.seen) {
+                allFormStepsSeen = false;
+                return false;
+            }
+        });
+
+        this.allFormStepsSeen = allFormStepsSeen;
     }
 
     submit() {
 
         this.form.markAllAsTouched();
 
-        if (this.form.invalid) {
+        if (!this.isFormValid) {
             this._showError({
                 title: 'Fehler',
                 message: 'Das Formular enthält Fehler. Bitte prüfen Sie Ihre Angaben und versuchen es erneut.'
@@ -148,13 +220,24 @@ export class RetailerRegistrationFormComponent implements OnInit {
         this.result.next(retailer);
     }
 
-    private _getCurrentStep(): IRetailerRegistrationFormStep {
-        return this._steps[this.selectedStepIndex];
+    private _getCurrentStep(): IRetailerRegistrationStep {
+        return this._steps[this.currentStepIndex];
     }
 
-    private _isStepValid(index: number): boolean {
+    private _isStepValid(index: number, validate?: boolean): boolean {
         const step = this._steps[index];
-        return step && step.form ? step.form.valid : false;
+
+        if (!step || RetailerRegistrationStepType.FORM !== step.type || !this.form) {
+            return false
+        }
+
+        const formGroup = this.form.get(step.key);
+
+        if (validate) {
+            formGroup.markAllAsTouched();
+        }
+
+        return formGroup && formGroup instanceof FormGroup ? formGroup.valid : false;
     }
 
     private _initForm() {
@@ -163,7 +246,6 @@ export class RetailerRegistrationFormComponent implements OnInit {
             email: new FormControl(null, [Validators.required, Validators.email]),
             dataUsageAccepted: new FormControl(null, Validators.requiredTrue)
         });
-        this._steps.push({ form: account });
 
         const basic = new FormGroup({
             name: new FormControl(null, Validators.required),
@@ -175,7 +257,6 @@ export class RetailerRegistrationFormComponent implements OnInit {
                 city: new FormControl(null, Validators.required)
             })
         });
-        this._steps.push({ form: basic });
 
         const contact = new FormGroup({
             email: new FormControl(null, Validators.email),
@@ -186,20 +267,17 @@ export class RetailerRegistrationFormComponent implements OnInit {
             facebook: new FormControl(),
             instagram: new FormControl()
         });
-        this._steps.push({ form: contact });
 
         const products = new FormGroup({
             businessDescription: new FormControl(),
             productsDescription: new FormControl()
         });
-        this._steps.push({ form: products });
 
         const order = new FormGroup({
             contactOptions: new FormControl(),
             paymentOptions: new FormControl(),
             deliveryOptions: new FormControl()
         });
-        this._steps.push({ form: order });
 
         this.form = new FormGroup({
             account,
@@ -209,6 +287,39 @@ export class RetailerRegistrationFormComponent implements OnInit {
             order
         });
 
+    }
+
+    private _initSteps() {
+
+        this._addFormStep('account', 'Account-Informationen');
+        this._addFormStep('basic', 'Grundlegende Angaben zu Ihrem Einzelhandel');
+        this._addFormStep('contact', 'Kontaktmöglichkeiten für Ihre Kunden');
+        this._addFormStep('products', 'Welche Produkte bieten Sie an?');
+        this._addFormStep('order', 'Wie bestelle ich bei Ihnen?');
+
+        this._steps.push({ type: RetailerRegistrationStepType.CONFIRMATION });
+
+    }
+
+    private _addFormStep(key: string, label: string) {
+
+        if (!this.form) {
+            return;
+        }
+
+        const formGroup = this.form.get(key);
+
+        if (!formGroup || !(formGroup instanceof FormGroup)) {
+            return;
+        }
+
+        this._steps.push({
+            type: RetailerRegistrationStepType.FORM,
+            key,
+            label
+        });
+
+        this._formStepCount++;
     }
 
     private _showError(error: IError) {

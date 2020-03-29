@@ -75,6 +75,53 @@ app-retailer-registration-form {
             max-width: $form-field-width;
             width: 100%;
         }
+
+        .app-retailer-registration-form__confirmation {
+            margin-top: 3rem;
+
+            .confirmation__header {
+
+                h4 {
+                    color: $color-text-muted;
+                    font-size: 1.25rem;
+                    margin: 1rem 0;
+                }
+
+                .confirmation__edit {
+                    font-size: 1.125rem;
+                    margin-top: -2px;   // fix for vertical alignment with headline
+                }
+            }
+
+            table {
+                font-size: 0.875rem;
+                margin: 0 0 1.5rem 2rem;
+                width: 100%;
+
+                tr {
+
+                    th,
+                    td {
+                        padding: 0.375rem 0;
+                        vertical-align: top;
+                    }
+
+                    th {
+                        padding-right: 1rem;
+                        text-align: left;
+                        width: 35%;
+                    }
+
+                    td {
+
+                        ul {
+                            margin: 0;
+                            padding-left: 1.5rem;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     .app-retailer-registration-form__actions {
