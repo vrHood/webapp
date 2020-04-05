@@ -61,13 +61,13 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="getFormControl('basic', 'branches') as control"
+                <mat-form-field *ngIf="getFormControl('basic', 'categories') as control"
                                 appearance="outline">
                     <mat-label>Welchem Branchenzweig würden Sie Ihren Laden zuordnen? *</mat-label>
-                    <mat-select formControlName="branches"
+                    <mat-select formControlName="categories"
                                 multiple
                                 [errorStateMatcher]="errorStateMatcher">
-                        <mat-option *ngFor="let branch of branches" [value]="branch">{{ branch }}</mat-option>
+                        <mat-option *ngFor="let category of (categories$ | async)" [value]="category"><mat-icon>{{ category.icon }}</mat-icon>{{ category.name }}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="control.hasError('required')">
                         Pflichtfeld
@@ -228,21 +228,21 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Wie soll die Bestellung bei Ihnen eingehen?</mat-label>
                     <mat-select formControlName="contactOptions" multiple>
-                        <mat-option *ngFor="let option of contactOptions" [value]="option">{{ option }}</mat-option>
+                        <mat-option *ngFor="let option of contactOptions" [value]="option.value">{{ option.label | translate }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
                     <mat-label>Wie kann ich bei Ihnen bezahlen?</mat-label>
                     <mat-select formControlName="paymentOptions" multiple>
-                        <mat-option *ngFor="let option of paymentOptions" [value]="option">{{ option }}</mat-option>
+                        <mat-option *ngFor="let option of paymentOptions" [value]="option.value">{{ option.label | translate }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
                     <mat-label>Wie weit können Sie liefern?</mat-label>
                     <mat-select formControlName="deliveryOptions" multiple>
-                        <mat-option *ngFor="let option of deliveryOptions" [value]="option">{{ option }}</mat-option>
+                        <mat-option *ngFor="let option of deliveryOptions" [value]="option.value">{{ option.label | translate }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
@@ -287,11 +287,11 @@
                             <th>Name</th>
                             <td>{{ control.value }}</td>
                         </tr>
-                        <tr *ngIf="getFormControl('basic', 'branches') as control">
+                        <tr *ngIf="getFormControl('basic', 'categories') as control">
                             <th>Welchem Branchenzweig würden Sie Ihren Laden zuordnen?</th>
                             <td>
                                 <ul>
-                                    <li *ngFor="let item of control.value">{{ item }}</li>
+                                    <li *ngFor="let item of control.value"><mat-icon>{{ item.icon }}</mat-icon>{{ item.name }}</li>
                                 </ul>
                             </td>
                         </tr>
@@ -384,7 +384,7 @@
                             <th>Wie soll die Bestellung bei Ihnen eingehen?</th>
                             <td>
                                 <ul>
-                                    <li *ngFor="let item of control.value">{{ item }}</li>
+                                    <li *ngFor="let item of control.value">{{ orderTypeLabels[item] | translate }}</li>
                                 </ul>
                             </td>
                         </tr>
@@ -392,7 +392,7 @@
                             <th>Wie kann ich bei Ihnen bezahlen?</th>
                             <td>
                                 <ul>
-                                    <li *ngFor="let item of control.value">{{ item }}</li>
+                                    <li *ngFor="let item of control.value">{{ paymentTypeLabels[item] | translate }}</li>
                                 </ul>
                             </td>
                         </tr>
@@ -400,7 +400,7 @@
                             <th>Wie weit können Sie liefern?</th>
                             <td>
                                 <ul>
-                                    <li *ngFor="let item of control.value">{{ item }}</li>
+                                    <li *ngFor="let item of control.value">{{ deliveryAreaLabels[item] | translate }}</li>
                                 </ul>
                             </td>
                         </tr>

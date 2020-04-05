@@ -1,20 +1,38 @@
 import { Component, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { Subject } from 'rxjs';
+import { Paginated } from '@feathersjs/feathers';
+import {
+    DELIVERY_AREA_SELECT_VALUES, DELIVERY_AREA_TRANSLATE_VALUES,
+    DeliveryArea,
+    ICategory,
+    ORDER_TYPE_SELECT_VALUES, ORDER_TYPE_TRANSLATE_VALUES,
+    OrderType,
+    PAYMENT_TYPE_SELECT_VALUES, PAYMENT_TYPE_TRANSLATE_VALUES,
+    PaymentType,
+    SelectValues,
+    SignupData,
+    SignupType, TranslateValues
+} from '@vrhood/shared';
+import { each as _each, find as _find, findIndex as _findIndex } from 'lodash';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CategoryService } from '../../../../services/category.service';
+
 import { IError } from '../../../../shared/error/models/error.model.i';
 import {
+    IRetailerRegistrationConfirmationStep,
     IRetailerRegistrationFormStep,
-    IRetailerRegistrationStep, IRetailerRegistrationConfirmationStep,
+    IRetailerRegistrationStep,
     RetailerRegistrationStepType
 } from '../../models/retailer-registration-step.model.i';
+
 import { RetailerRegistrationFormErrorStateMatcher } from './retailer-registration-form-error-step-matcher';
-import { each as _each, find as _find, findIndex as _findIndex } from 'lodash';
 
 @Component({
     selector: 'app-retailer-registration-form',
     templateUrl: './retailer-registration-form.component.html',
-    styleUrls: ['./retailer-registration-form.component.scss'],
+    styleUrls: [ './retailer-registration-form.component.scss' ],
     encapsulation: ViewEncapsulation.None,
     host: {
         class: 'app-retailer-registration-form'
@@ -23,52 +41,34 @@ import { each as _each, find as _find, findIndex as _findIndex } from 'lodash';
 export class RetailerRegistrationFormComponent implements OnInit {
 
     @Output()
-    result: Subject<any> = new Subject<any>();
+    result: Subject<SignupData> = new Subject<SignupData>();
 
     @Output()
     error: Subject<IError> = new Subject<IError>();
 
     form: FormGroup;
-    branches: string[] = [
-        'Nahrungs- und Genussmittel',
-        'Gesundheit und Körperpflege',
-        'Blumen, Pflanzen und zoologischer Bedarf',
-        'Bücher, Papierwaren, Bürobedarf, Schreib- und Spielwaren',
-        'Bekleidung, Schuhe, Sport',
-        'Hausrat, Einrichtung und Möbel',
-        'Handwerk, Kunst, Design',
-        'Sonstiger Einzelhandel'
-    ];
-    contactOptions: string[] = [
-        'telefonisch',
-        'per Mail',
-        'über meinen Webshop',
-        'persönliche Nachricht auf Social Media'
-    ];
-    paymentOptions: string[] = [
-        'auf Rechnung',
-        'Vorkasse/Überweisung',
-        'PayPal',
-        'Sofortüberweisung',
-        'Kreditkarte',
-        'googlePay',
-        'ApplePay',
-        'Sonstiges'
-    ];
-    deliveryOptions: string[] = [
-        'Stadtgebiet',
-        'Landkreis',
-        'Bundesweit'
-    ];
+
+    contactOptions: SelectValues<OrderType> = ORDER_TYPE_SELECT_VALUES;
+    paymentOptions: SelectValues<PaymentType> = PAYMENT_TYPE_SELECT_VALUES;
+    deliveryOptions: SelectValues<DeliveryArea> = DELIVERY_AREA_SELECT_VALUES;
+    orderTypeLabels: TranslateValues<OrderType> = ORDER_TYPE_TRANSLATE_VALUES;
+    paymentTypeLabels: TranslateValues<PaymentType> = PAYMENT_TYPE_TRANSLATE_VALUES;
+    deliveryAreaLabels: TranslateValues<DeliveryArea> = DELIVERY_AREA_TRANSLATE_VALUES;
 
     errorStateMatcher: ErrorStateMatcher = new RetailerRegistrationFormErrorStateMatcher();
     currentStepIndex: number;
     allFormStepsSeen: boolean = false;
 
+    readonly categories$: Observable<ICategory[]>;
+
     private _steps: IRetailerRegistrationStep[] = [];
     private _formStepCount: number = 0;
 
-    constructor() {
+    constructor(private readonly _categoryService: CategoryService) {
+        this.categories$ = _categoryService.find()
+            .pipe(
+                map((result: Paginated<ICategory>) => result.data)
+            );
     }
 
     get hasNextStep(): boolean {
@@ -215,9 +215,9 @@ export class RetailerRegistrationFormComponent implements OnInit {
 
         this._hideError();
 
-        const retailer = this._getRetailerFromForm();
+        const signupData = this._getSignupDataFromForm();
 
-        this.result.next(retailer);
+        this.result.next(signupData);
     }
 
     private _getCurrentStep(): IRetailerRegistrationStep {
@@ -228,7 +228,7 @@ export class RetailerRegistrationFormComponent implements OnInit {
         const step = this._steps[index];
 
         if (!step || RetailerRegistrationStepType.FORM !== step.type || !this.form) {
-            return false
+            return false;
         }
 
         const formGroup = this.form.get(step.key);
@@ -243,13 +243,13 @@ export class RetailerRegistrationFormComponent implements OnInit {
     private _initForm() {
 
         const account = new FormGroup({
-            email: new FormControl(null, [Validators.required, Validators.email]),
+            email: new FormControl(null, [ Validators.required, Validators.email ]),
             dataUsageAccepted: new FormControl(null, Validators.requiredTrue)
         });
 
         const basic = new FormGroup({
             name: new FormControl(null, Validators.required),
-            branches: new FormControl(null, Validators.required),
+            categories: new FormControl(null, Validators.required),
             address: new FormGroup({
                 street: new FormControl(null, Validators.required),
                 houseNumber: new FormControl(null, Validators.required),
@@ -330,19 +330,33 @@ export class RetailerRegistrationFormComponent implements OnInit {
         this.error.next();
     }
 
-    private _getRetailerFromForm() {
+    private _getSignupDataFromForm(): SignupData {
 
         const formData = this.form.value;
 
-        const retailer = {
-            ...formData.account,
-            ...formData.basic,
-            contact: formData.contact,
-            ...formData.products,
-            ...formData.order
+        const categories = (formData.basic.categories || []).map((category) => category._id);
+        const mainCategory = categories ? categories[0] : null;
+
+        const data: SignupData = {
+            type: SignupType.RETAILER,
+            user: {
+                ...formData.account
+            },
+            retailer: {
+                name: formData.basic.name,
+                location: formData.basic.address,
+                mainCategoryId: mainCategory,
+                additionalCategoryIds: categories,
+                ...formData.contact,
+                description: formData.products.businessDescription,
+                offer: formData.products.productsDescription,
+                orderTypes: formData.order.contactOptions,
+                paymentTypes: formData.order.paymentOptions,
+                deliveryAreas: formData.order.deliveryOptions
+            }
         };
 
-        return retailer;
+        return data;
     }
 
 }

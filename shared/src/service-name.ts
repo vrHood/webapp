@@ -1,5 +1,6 @@
 export enum ServiceName {
     CATEGORIES = 'categories',
     RETAILERS = 'retailers',
-    USERS = 'users'
+    USERS = 'users',
+    SIGNUP = 'signup'
 }

@@ -8,4 +8,5 @@ export interface IUser extends IActivatableEntity {
     password?: string;
     role: UserRole;
     retailerId?: string;
+    privacyPolicyAccepted?: boolean;
 }

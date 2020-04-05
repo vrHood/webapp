@@ -7,7 +7,7 @@ import { AuthenticateHookSettings } from '@feathersjs/authentication/src/hooks/a
 import { Forbidden } from '@feathersjs/errors';
 import { Hook, HookContext } from '@feathersjs/feathers';
 import { UserRole, UserUtils } from '@vrhood/shared';
-import { iff, SyncPredicateFn } from 'feathers-hooks-common';
+import { iff, combine, SyncPredicateFn, isNot, isProvider, every } from 'feathers-hooks-common';
 import { get as _get } from 'lodash';
 
 import { IActiveUser } from '../declarations';
@@ -84,7 +84,10 @@ export namespace AuthHooks {
 
     export function requireAuthenticated() {
         return iff(
-            isNotAuthenticated(),
+            every(
+                isProvider('external'),
+                isNotAuthenticated()
+            ),
             () => {
                 throw new Forbidden('Not authenticated!');
             }

@@ -13,6 +13,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { AppErrorModule } from '../../shared/error/app-error.module';
 import { AppFooterModule } from '../../shared/footer/app-footer.module';
 import { AUTH_ROUTES } from './auth.routes';
@@ -41,7 +42,8 @@ import { RetailerRegistrationPage } from './pages/retailer-registration/retailer
         AppFooterModule,
         MatProgressSpinnerModule,
         MatProgressBarModule,
-        MatIconModule
+        MatIconModule,
+        TranslateModule
     ],
     declarations: [
         LoginPage,

@@ -7,5 +7,7 @@ export * from './location.model.i';
 export * from './order-type.model';
 export * from './payment-type.model';
 export * from './retailer.model.i';
+export * from './signup-data.model';
+export * from './signup-type.model';
 export * from './user.model.i';
 export * from './user-role.model';

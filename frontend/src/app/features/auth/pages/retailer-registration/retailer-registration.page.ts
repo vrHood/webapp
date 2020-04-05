@@ -1,12 +1,16 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core'
+import { SignupData } from '@vrhood/shared';
+
+import { SignupService } from '../../../../services/signup.service';
 import { IError } from '../../../../shared/error/models/error.model.i';
 import { RetailerRegistrationView } from '../../models/retailer-registration-view.model.i';
 
 @Component({
     selector: 'app-retailer-registration',
     templateUrl: './retailer-registration.page.html',
-    styleUrls: ['./retailer-registration.page.scss'],
+    styleUrls: [ './retailer-registration.page.scss' ],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         class: 'app-retailer-registration'
     }
@@ -17,7 +21,7 @@ export class RetailerRegistrationPage implements OnInit {
 
     private _view: RetailerRegistrationView = RetailerRegistrationView.FORM;
 
-    constructor() {
+    constructor(private readonly _signupService: SignupService, private readonly _changeDetector: ChangeDetectorRef) {
     }
 
     get view(): RetailerRegistrationView {
@@ -25,12 +29,12 @@ export class RetailerRegistrationPage implements OnInit {
     }
 
     set view(view: RetailerRegistrationView) {
-
         if (view === this._view) {
             return;
         }
 
         this._view = view;
+        this._changeDetector.detectChanges();
     }
 
     get isFormView(): boolean {
@@ -56,8 +60,8 @@ export class RetailerRegistrationPage implements OnInit {
         this.view = RetailerRegistrationView.FORM;
     }
 
-    onFormSubmit(retailer: any) {
-        console.log('onFormSubmit', retailer);
+    onFormSubmit(signupData: SignupData) {
+        console.log('onFormSubmit', signupData);
 
         if (this.error) {
             this.error = null;
@@ -65,7 +69,7 @@ export class RetailerRegistrationPage implements OnInit {
 
         this.view = RetailerRegistrationView.LOADING;
 
-        this._save();
+        this._save(signupData);
     }
 
     onFormError(error: IError) {
@@ -74,9 +78,20 @@ export class RetailerRegistrationPage implements OnInit {
         this.view = RetailerRegistrationView.ERROR;
     }
 
-    private _save() {
+    private _save(signupData: SignupData) {
         // TODO: create retailer
+
+        this._signupService.create(signupData)
+            .then(() => this._onSuccess())
+            .catch((error) => this._onError(error));
+    }
+
+    private _onSuccess() {
         this.view = RetailerRegistrationView.SUCCESS;
+    }
+
+    private _onError(error: any) {
+        this.view = RetailerRegistrationView.ERROR;
     }
 
 }
