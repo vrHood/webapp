@@ -17,8 +17,8 @@ import {
 import { each as _each, find as _find, findIndex as _findIndex } from 'lodash';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CategoryService } from '../../../../services/category.service';
 
+import { CategoryService } from '../../../../services/category.service';
 import { IError } from '../../../../shared/error/models/error.model.i';
 import {
     IRetailerRegistrationConfirmationStep,
@@ -67,7 +67,10 @@ export class RetailerRegistrationFormComponent implements OnInit {
     constructor(private readonly _categoryService: CategoryService) {
         this.categories$ = _categoryService.find()
             .pipe(
-                map((result: Paginated<ICategory>) => result.data)
+                // @ts-ignore
+                map((result: ICategory[] | Paginated<ICategory>) => {
+                    return Array.isArray(result) ? result : result.data;
+                })
             );
     }
 
