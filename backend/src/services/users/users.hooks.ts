@@ -1,26 +1,54 @@
-import * as feathersAuthentication from '@feathersjs/authentication';
-import * as local from '@feathersjs/authentication-local';
-// Don't remove this comment. It's needed to format import lines nicely.
+import { iff } from 'feathers-hooks-common';
 
-const { authenticate } = feathersAuthentication.hooks;
-const { hashPassword, protect } = local.hooks;
+import { AuthHooks } from '../../hooks/auth.hooks';
+import { CommonHooks } from '../../hooks/common.hooks';
+// Don't remove this comment. It's needed to format import lines nicely.
 
 export default {
     before: {
         all: [],
-        find: [ authenticate('jwt') ],
-        get: [ authenticate('jwt') ],
-        create: [ hashPassword('password') ],
-        update: [ hashPassword('password'), authenticate('jwt') ],
-        patch: [ hashPassword('password'), authenticate('jwt') ],
-        remove: [ authenticate('jwt') ]
+        find: [
+            AuthHooks.authenticate('jwt'),
+            AuthHooks.checkPermissions()
+        ],
+        get: [
+            AuthHooks.authenticate('jwt'),
+            AuthHooks.checkPermissions()
+        ],
+        create: [
+            AuthHooks.hashPassword('password'),
+            // TODO: for now, we don't want an open registration!
+            AuthHooks.authenticate('jwt'),
+            AuthHooks.checkPermissions(),
+            AuthHooks.checkDataPermissions()
+        ],
+        update: [
+            AuthHooks.hashPassword('password'),
+            AuthHooks.authenticate('jwt'),
+            AuthHooks.checkPermissions(),
+            AuthHooks.checkDataPermissions()
+        ],
+        patch: [
+            AuthHooks.hashPassword('password'),
+            AuthHooks.authenticate('jwt'),
+            AuthHooks.checkPermissions(),
+            AuthHooks.checkDataPermissions()
+        ],
+        remove: [
+            AuthHooks.authenticate('jwt'),
+            AuthHooks.checkPermissions()
+        ]
     },
 
     after: {
         all: [
             // Make sure the password field is never sent to the client
             // Always must be the last hook
-            protect('password')
+            CommonHooks.protect('password'),
+            iff(
+                AuthHooks.isNotAuthenticated(),
+                CommonHooks.protect('active')
+            )
         ],
         find: [],
         get: [],

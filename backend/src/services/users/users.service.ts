@@ -4,6 +4,7 @@ import { IUser, ServiceName } from '@vrhood/shared';
 
 import { Application } from '../../declarations';
 import createModel from '../../models/user.model';
+import { usersChannels } from './users.channels';
 
 import { Users } from './users.class';
 import hooks from './users.hooks';
@@ -29,4 +30,5 @@ export default function (app: Application) {
     const service = app.service(ServiceName.USERS);
 
     service.hooks(hooks);
+    service.publish(usersChannels(app));
 }

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 import { Application } from './declarations';
 import logger from './logger';
 
@@ -10,12 +11,12 @@ export default function (app: Application) {
         useNewUrlParser: true
     };
 
-    const connectWithRetry = function () {
+    const connectWithRetry = () => {
         logger.info('MongoDB connection with retry');
         return mongoose.connect(uri, options);
     };
 
-    mongoose.connection.on('error', err => {
+    mongoose.connection.on('error', (err) => {
         logger.info(`MongoDB connection error: ${err}`);
         setTimeout(connectWithRetry, 5000);
         // process.exit(-1)

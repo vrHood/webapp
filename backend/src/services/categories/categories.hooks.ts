@@ -1,17 +1,20 @@
-import { iff, iffElse, isNot, isProvider } from 'feathers-hooks-common';
+import { iff, iffElse } from 'feathers-hooks-common';
 
 import { AuthHooks } from '../../hooks/auth.hooks';
 import { CommonHooks } from '../../hooks/common.hooks';
-import { Provider } from '../../types/provider';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default {
     before: {
         all: [
             AuthHooks.tryAuthenticate('jwt'),
-            iff(
-                isProvider(Provider.EXTERNAL),
-                AuthHooks.checkPermissions()
+            iffElse(
+                AuthHooks.isAuthenticated(),
+                [
+                    AuthHooks.checkPermissions(),
+                    AuthHooks.checkDataPermissions()
+                ],
+                CommonHooks.extendQuery({ active: true })
             )
         ],
         find: [],
@@ -25,8 +28,8 @@ export default {
     after: {
         all: [
             iff(
-                isProvider(Provider.EXTERNAL),
-                AuthHooks.protectFields()
+                AuthHooks.isNotAuthenticated(),
+                CommonHooks.protect('active')
             )
         ],
         find: [],

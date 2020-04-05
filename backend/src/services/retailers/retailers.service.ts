@@ -4,6 +4,7 @@ import { IRetailer, ServiceName } from '@vrhood/shared';
 import { Application } from '../../declarations';
 import createModel from '../../models/retailer.model';
 
+import { retailersChannels } from './retailers.channels';
 import { Retailers } from './retailers.class';
 import hooks from './retailers.hooks';
 
@@ -28,4 +29,5 @@ export default function (app: Application) {
     const service = app.service(ServiceName.RETAILERS);
 
     service.hooks(hooks);
+    service.publish(retailersChannels(app));
 }

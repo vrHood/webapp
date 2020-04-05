@@ -4,14 +4,15 @@ import { ICategory, ServiceName } from '@vrhood/shared';
 import { Application } from '../../declarations';
 import createModel from '../../models/category.model';
 
-import { Category } from './category.class';
-import hooks from './category.hooks';
+import { categoriesChannels } from './categories.channels';
+import { Categories } from './categories.class';
+import hooks from './categories.hooks';
 
 // Add this service to the service type index
 declare module '../../declarations' {
 
     interface ServiceTypes {
-        [ServiceName.CATEGORIES]: Category & ServiceAddons<ICategory>;
+        [ServiceName.CATEGORIES]: Categories & ServiceAddons<ICategory>;
     }
 }
 
@@ -22,10 +23,11 @@ export default function (app: Application) {
     };
 
     // Initialize our service with any options it requires
-    app.use(`/${ServiceName.CATEGORIES}`, new Category(options, app));
+    app.use(`/${ServiceName.CATEGORIES}`, new Categories(options, app));
 
     // Get our initialized service so that we can register hooks
     const service = app.service(ServiceName.CATEGORIES);
 
     service.hooks(hooks);
+    service.publish(categoriesChannels(app));
 }

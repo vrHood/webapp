@@ -3,7 +3,7 @@ import { MongooseServiceOptions, Service } from 'feathers-mongoose';
 
 import { Application } from '../../declarations';
 
-export class Category extends Service<ICategory> {
+export class Categories extends Service<ICategory> {
 
     constructor(options: Partial<MongooseServiceOptions>, app: Application) {
         super(options);

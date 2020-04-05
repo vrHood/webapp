@@ -5,9 +5,9 @@
         "declaration": true,
         "outDir": "./lib",
         "rootDir": "./src",
-        "strict": true,
+        "strict": false,
         "esModuleInterop": true,
-
+        "noImplicitAny": false
     },
     "exclude": [
         "shared",

@@ -38,8 +38,16 @@ docker-compose up --build -d
 
 **Frontend**
 
+*Run in `shared/`*
+
+```
+npm run build
+npm link
+```
+
 *Run in `frontend/`*
 ```
+npm link @vrhood/shared
 ng serve
 ```
 
