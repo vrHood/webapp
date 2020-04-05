@@ -4,6 +4,7 @@ import { IUser, UserRole } from '@vrhood/shared';
 import { RedirectAuthenticatedGuard } from '../../guards/redirect-authenticated.guard';
 
 import { LoginPage } from './pages/login/login.page';
+import { RetailerRegistrationPage } from './pages/retailer-registration/retailer-registration.page';
 
 export const AUTH_ROUTES: Routes = [
     {
@@ -19,6 +20,10 @@ export const AUTH_ROUTES: Routes = [
                 return UserRole.ADMIN === user.role ? '/admin/users' : '/';
             }
         },
-        canActivate: [ RedirectAuthenticatedGuard ]
+        canActivate: [RedirectAuthenticatedGuard]
+    },
+    {
+        path: 'retailer-registration',
+        component: RetailerRegistrationPage
     }
 ];

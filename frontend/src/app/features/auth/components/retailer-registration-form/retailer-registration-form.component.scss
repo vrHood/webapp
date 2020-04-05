@@ -1,0 +1,151 @@
+@import "_globals";
+
+$form-field-width: 32rem;
+
+app-retailer-registration-form {
+    display: block;
+}
+
+.app-retailer-registration-form {
+
+    .app-retailer-registration-form__header {
+        margin-bottom: 1rem;
+
+        h2 {
+            font-size: 1.75rem;
+            margin: 0;
+
+            @include mq(tablet) {
+                font-size: 1.875rem;
+            }
+
+            @include mq(tablet-lg) {
+                font-size: 2rem;
+            }
+
+            @include mq(desktop) {
+                font-size: 2.5rem;
+            }
+        }
+
+        .app-retailer-registration-form__progress {
+            color: $color-text-muted;
+            white-space: nowrap;
+        }
+    }
+
+    .app-retailer-registration-form__steps {
+        margin: 0 -1.5rem -1.5rem;
+
+        mat-tab-header {
+            display: none;
+        }
+
+        mat-tab-body {
+
+            .mat-tab-body-content {
+                padding: 0 1.5rem 1.5rem;
+            }
+        }
+
+        h3 {
+            color: $color-text-muted;
+            font-size: 1.5rem;
+
+            @include mq(tablet) {
+                font-size: 1.75rem;
+            }
+
+            @include mq(tablet-lg) {
+                font-size: 1.875rem;
+            }
+
+            @include mq(desktop) {
+                font-size: 2rem;
+            }
+        }
+
+        .app-retailer-registration-form__form-row {
+            max-width: calc(#{$form-field-width} + var(--grid-gutter) * 2);
+            width: 100%;
+        }
+
+        mat-form-field {
+            display: block;
+            max-width: $form-field-width;
+            width: 100%;
+        }
+
+        .app-retailer-registration-form__confirmation {
+            margin-top: 3rem;
+
+            .confirmation__header {
+
+                h4 {
+                    color: $color-text-muted;
+                    font-size: 1.25rem;
+                    margin: 1rem 0;
+                }
+
+                .confirmation__edit {
+                    font-size: 1.125rem;
+                    margin-top: -2px;   // fix for vertical alignment with headline
+                }
+            }
+
+            table {
+                font-size: 0.875rem;
+                margin: 0 0 1.5rem 2rem;
+                width: 100%;
+
+                tr {
+
+                    th,
+                    td {
+                        padding: 0.375rem 0;
+                        vertical-align: top;
+                    }
+
+                    th {
+                        padding-right: 1rem;
+                        text-align: left;
+                        width: 35%;
+                    }
+
+                    td {
+
+                        ul {
+                            margin: 0;
+                            padding-left: 1.5rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .app-retailer-registration-form__actions {
+        align-items: center;
+        display: flex;
+        margin-top: 1rem;
+
+        > * + * {
+            margin-left: 1rem;
+        }
+
+        .app-retailer-registration-form__progress {
+            color: $color-text-muted;
+            font-size: 0.875rem;
+        }
+
+        .app-retailer-registration-form__hint {
+            color: $color-text-muted;
+            font-size: 0.75rem;
+            margin-left: auto;
+        }
+    }
+
+    app-error {
+        margin-top: 2rem;
+    }
+}
