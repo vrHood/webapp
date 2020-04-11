@@ -1,0 +1,7 @@
+<app-category-list-item class="app-category-list__item"
+                    *ngFor="let category of (categories$ | async)"
+                    [category]="category"
+                    [selected]="selectedCategories.includes(category._id)"
+                    (click)="onCategoryClick(category)">
+
+</app-category-list-item>

@@ -1,10 +1,14 @@
+@import "_globals";
+
+$form-field-width: 48rem;
+
 app-retailer-edit-dialog {
     display: block;
 }
 
 .app-retailer-edit-dialog {
 
-    > h2 {
+    h2 {
         font-weight: 100;
         font-size: 2rem;
         color: rgba(0, 0, 0, 0.6);
@@ -12,10 +16,17 @@ app-retailer-edit-dialog {
         margin-bottom: 2rem;
     }
 
-    > form {
+    form {
 
-        > mat-form-field {
+        .app-retailer-edit-dialog__form-row {
+            max-width: calc(#{$form-field-width} + var(--grid-gutter) * 2);
+            width: 100%;
+        }
+
+        mat-form-field.mat-form-field {
             display: block;
+            max-width: $form-field-width;
+            width: 100%;
         }
     }
 

@@ -10,7 +10,151 @@
             <input matInput type="text" formControlName="name">
         </mat-form-field>
 
+        <h3>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.GROUP.CATEGORIES.TITLE' | translate }}</h3>
+
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.MAIN_CATEGORY.LABEL'  | translate }}</mat-label>
+            <mat-select formControlName="mainCategory" (selectionChange)="changeDetector.detectChanges()" [compareWith]="compareCategories">
+                <mat-select-trigger>
+                    <app-category-badge [category]="form.get('mainCategory').value"></app-category-badge>
+                </mat-select-trigger>
+                <mat-option *ngFor="let category of (categories$ | async)" [value]="category">
+                    <app-category-badge [category]="category"></app-category-badge>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.FIELD.ADDITIONAL_CATEGORIES.LABEL'  | translate }}</mat-label>
+            <mat-select formControlName="additionalCategories" multiple (selectionChange)="changeDetector.detectChanges()" [compareWith]="compareCategories">
+                <mat-select-trigger>
+                    <mat-chip-list aria-label="Zusätzliche Kategorien">
+                        <mat-chip *ngFor="let category of form.get('additionalCategories').value"
+                                  removable
+                                  (removed)="removeSelectValue('additionalCategories', category)"
+                                    [style.background-color]="category.color"
+                                  [style.color]="'white'">
+                            <mat-icon appChipLeadingIcon fontSet="vrhood">{{ category.icon }}</mat-icon>
+                            {{ category.name }}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                </mat-select-trigger>
+                <mat-option *ngFor="let category of (categories$ | async)"
+                            [value]="category"><app-category-badge [category]="category"></app-category-badge></mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
         <h3>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.GROUP.ADDRESS.TITLE' | translate }}</h3>
+
+
+        <div formGroupName="location">
+
+            <div class="app-retailer-edit-dialog__form-row o-grid">
+
+                <div class="o-cell u-3/4">
+
+                    <mat-form-field *ngIf="getFormControl('location', 'street') as control" appearance="outline">
+                        <mat-label>Straße *</mat-label>
+                        <input matInput
+                               [formControl]="control"
+                               [errorStateMatcher]="errorStateMatcher" />
+                        <mat-error *ngIf="control.hasError('required')">
+                            Pflichtfeld
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <div class="o-cell u-1/4">
+
+                    <mat-form-field *ngIf="getFormControl('location', 'houseNumber') as control"
+                                    appearance="outline">
+                        <mat-label>Hausnr. *</mat-label>
+                        <input matInput
+                               formControlName="houseNumber"
+                               [errorStateMatcher]="errorStateMatcher" />
+                        <mat-error *ngIf="control.hasError('required')">
+                            Pflichtfeld
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+            </div>
+
+            <div class="app-retailer-edit-dialog__form-row o-grid">
+
+                <div class="o-cell u-1/4">
+
+                    <mat-form-field *ngIf="getFormControl('location', 'zip') as control"
+                                    appearance="outline">
+                        <mat-label>PLZ *</mat-label>
+                        <input matInput
+                               formControlName="zip"
+                               [errorStateMatcher]="errorStateMatcher" />
+                        <mat-error *ngIf="control.hasError('required')">
+                            Pflichtfeld
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <div class="o-cell u-3/4">
+
+                    <mat-form-field *ngIf="getFormControl('location', 'city') as control"
+                                    appearance="outline">
+                        <mat-label>Ort *</mat-label>
+                        <input matInput
+                               formControlName="city"
+                               [errorStateMatcher]="errorStateMatcher" />
+                        <mat-error *ngIf="control.hasError('required')">
+                            Pflichtfeld
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+            </div>
+
+            <div class="app-retailer-edit-dialog__form-row o-grid">
+
+                <div class="o-cell u-1/2">
+
+                    <mat-form-field *ngIf="getFormControl('location', 'latitude') as control"
+                                    appearance="outline">
+                        <mat-label>Latitude *</mat-label>
+                        <input matInput
+                               [formControl]="control"
+                               [errorStateMatcher]="errorStateMatcher" />
+                        <mat-error *ngIf="control.hasError('required')">
+                            Pflichtfeld
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <div class="o-cell u-1/2">
+
+                    <mat-form-field *ngIf="getFormControl('location', 'longitude') as control"
+                                    appearance="outline">
+                        <mat-label>Longitude *</mat-label>
+                        <input matInput
+                               [formControl]="control"
+                               [errorStateMatcher]="errorStateMatcher" />
+                        <mat-error *ngIf="control.hasError('required')">
+                            Pflichtfeld
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+            </div>
+
+        </div>
+
 
         <h3>{{ 'FEATURES.RETAILER.DIALOGS.EDIT.GROUP.CONTACT.TITLE' | translate }}</h3>
 

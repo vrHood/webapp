@@ -6,6 +6,11 @@
 
     <app-page-layout-header>
         <h1 appPageLayoutHeaderTitle>{{ retailer.name }}</h1>
+        <app-category-badge
+            appPageLayoutHeaderSubtitle
+            [category]="retailer.mainCategoryId" [routerLink]="['/admin', 'categories' ]"
+        (click)="$event.preventDefault()">
+        </app-category-badge>
 
         <app-active-toggle appPageLayoutHeaderAction [entity]="retailer" [service]="retailerService"></app-active-toggle>
 
@@ -106,6 +111,12 @@
                 <mat-chip-list>
                     <mat-chip *ngFor="let tag of retailer.tags">{{ tag }}</mat-chip>
                 </mat-chip-list>
+            </td>
+        </tr>
+        <tr>
+            <td class="data__name">{{ 'FEATURES.RETAILER.PAGES.DETAIL.TABS.INFO.SECTION.ADDITIONAL_CATEGORIES' | translate }}</td>
+            <td class="data__value">
+                <app-category-badge *ngFor="let categoryId of retailer.additionalCategoryIds" [category]="categoryId"></app-category-badge>
             </td>
         </tr>
     </table>

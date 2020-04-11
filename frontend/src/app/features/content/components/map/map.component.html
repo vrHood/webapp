@@ -1,0 +1,13 @@
+<google-map #map
+            height="100vh"
+            width="100vw"
+            [options]="mapOptions"
+            (mapClick)="onMapClick($event)">
+
+    <map-marker *ngFor="let retailer of (retailers$ | async)"
+                [position]="getLatLng(retailer)"
+                [options]="getMarkerOptions(retailer)"
+                (mapClick)="onRetailerClick(retailer)">
+    </map-marker>
+
+</google-map>

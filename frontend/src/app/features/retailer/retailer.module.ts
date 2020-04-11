@@ -16,6 +16,8 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { AppActiveToggleModule } from '../../shared/active-toggle/active-toggle.module';
+import { CategoryBadgeModule } from '../../shared/category-badge/category-badge.module';
+import { AppChipModule } from '../../shared/chip/chip.module';
 import { AppDialogModule } from '../../shared/dialog/dialog.module';
 import { AppPageLayoutModule } from '../../shared/page-layout/page-layout.module';
 import { AppTableModule } from '../../shared/table/table.module';
@@ -48,7 +50,9 @@ import { RETAILER_ROUTES } from './retailer.routes';
         AppActiveToggleModule,
         AppDialogModule,
         AppPageLayoutModule,
-        AppTableModule
+        AppTableModule,
+        CategoryBadgeModule,
+        AppChipModule
     ],
     declarations: [ RetailerDetailPage, RetailerOverviewPage, RetailerDeleteDialogComponent, RetailerEditDialogComponent ]
 })

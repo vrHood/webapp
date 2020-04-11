@@ -27,7 +27,7 @@ import {
     RetailerRegistrationStepType
 } from '../../models/retailer-registration-step.model.i';
 
-import { RetailerRegistrationFormErrorStateMatcher } from './retailer-registration-form-error-step-matcher';
+import { DefaultErrorStateMatcher } from '../../../../utils/default-error-step-matcher';
 
 @Component({
     selector: 'app-retailer-registration-form',
@@ -55,7 +55,7 @@ export class RetailerRegistrationFormComponent implements OnInit {
     paymentTypeLabels: TranslateValues<PaymentType> = PAYMENT_TYPE_TRANSLATE_VALUES;
     deliveryAreaLabels: TranslateValues<DeliveryArea> = DELIVERY_AREA_TRANSLATE_VALUES;
 
-    errorStateMatcher: ErrorStateMatcher = new RetailerRegistrationFormErrorStateMatcher();
+    errorStateMatcher: ErrorStateMatcher = new DefaultErrorStateMatcher();
     currentStepIndex: number;
     allFormStepsSeen: boolean = false;
 

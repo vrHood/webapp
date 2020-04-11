@@ -1,0 +1,54 @@
+app-category-badge {
+    display: block;
+}
+
+.app-category-badge {
+    --badge-color: grey;
+    --badge-contrast-color: white;
+    $category-badge-height: 36px;
+    $category-badge-icon-size: 24px;
+
+    align-items: center;
+    background-color: var(--badge-color);
+    border-radius: $category-badge-height / 2;
+    box-shadow: 0 4px 8px rgba(black, 0.2);
+    color: var(--badge-contrast-color);
+    cursor: pointer;
+    display: inline-flex;
+    height: $category-badge-height;
+    margin: 8px;
+    padding: 4px 16px;
+
+    &.app-category-badge--icon-only {
+        justify-content: center;
+        padding: 4px;
+        width: $category-badge-height;
+
+        mat-icon.mat-icon.app-category-badge__icon {
+            width: $category-badge-icon-size;
+            height: $category-badge-icon-size;
+            font-size: $category-badge-icon-size;
+            margin-right: 0;
+        }
+    }
+
+    span.app-category-badge__name {
+        font-size: 16px;
+        text-overflow: ellipsis;
+    }
+
+    mat-icon.mat-icon.app-category-badge__icon {
+        width: $category-badge-icon-size;
+        height: $category-badge-icon-size;
+        font-size: $category-badge-icon-size;
+        margin-right: 8px;
+    }
+
+    .app-category-badge__icon {
+
+    }
+
+    .app-category-badge__name {
+
+    }
+}

@@ -20,5 +20,14 @@ mat-chip {
         &:last-child {
             margin-right: 0;
         }
+
+        &.app-chip-leading-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            margin-left: 8px;
+            font-size: 20px;
+            border-radius: 0;
+        }
     }
 }

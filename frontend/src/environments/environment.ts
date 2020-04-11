@@ -5,7 +5,8 @@
 export const environment = {
     production: false,
     endpoint: 'http://localhost:3030',
-    baseUrl: 'http://localhost:4200'
+    baseUrl: 'http://localhost:4200',
+    googleMapsApiKey: 'AIzaSyB1tb7ZYHS5YthgrLCc1Lu1NI0fUlF5GEY'
 };
 
 /*

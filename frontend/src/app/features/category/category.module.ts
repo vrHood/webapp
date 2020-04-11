@@ -12,6 +12,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { AppActiveToggleModule } from '../../shared/active-toggle/active-toggle.module';
+import { CategoryBadgeModule } from '../../shared/category-badge/category-badge.module';
+import { ColorBadgeModule } from '../../shared/color-badge/color-badge.module';
+import { IconNamePipeModule } from '../../shared/icon-name-pipe/icon-name-pipe.module';
 import { AppPageLayoutModule } from '../../shared/page-layout/page-layout.module';
 
 import { AppTableModule } from '../../shared/table/table.module';
@@ -40,7 +43,10 @@ import { CategoryListPage } from './pages/list/category-list.page';
 
         AppTableModule,
         AppPageLayoutModule,
-        AppActiveToggleModule
+        AppActiveToggleModule,
+        ColorBadgeModule,
+        CategoryBadgeModule,
+        IconNamePipeModule
     ],
     declarations: [ CategoryDetailPage, CategoryListPage, CategoryEditDialogComponent ]
 })

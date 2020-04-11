@@ -19,7 +19,7 @@ import { RetailerEditDialogComponent, RetailerEditMode } from '../../dialogs/edi
 })
 export class RetailerOverviewPage implements OnInit {
 
-    displayedColumns = [ 'name', 'email', 'active', 'edit', 'delete' ];
+    displayedColumns = [ 'name', 'email', 'mainCategory', 'active', 'edit', 'delete' ];
 
     constructor(readonly retailerService: RetailerService,
                 private readonly _matDialog: MatDialog,

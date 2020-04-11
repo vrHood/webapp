@@ -4,14 +4,11 @@ import { without as _without } from 'lodash';
 import { Application } from '../../declarations';
 import { CanDsl } from '../../types/can-dsl';
 import { PermissionAction } from '../../types/permission-action';
-import { DataUtils } from '../../utils/data.utils';
 import { TypeUtils } from '../../utils/type.utils';
-
-import { Retailers } from './retailers.class';
 
 export function addRetailerPermissions(app: Application, activeUser: IUser, can: CanDsl): void {
     const service = app.service(ServiceName.RETAILERS);
-    const properties: string[] = Object.keys(service.Model.schema.paths);
+    const properties: string[] = service.fields;
 
     if (activeUser != null && activeUser.active) {
         if (UserUtils.hasRole(activeUser, UserRole.ADMIN)) {

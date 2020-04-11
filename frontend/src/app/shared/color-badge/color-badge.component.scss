@@ -1,0 +1,13 @@
+app-color-badge {
+    display: block;
+}
+
+.app-color-badge {
+    --badge-color: transparent;
+    --badge-contrast-color: black;
+
+    mat-chip.mat-chip {
+        background-color: var(--badge-color);
+        color: var(--badge-contrast-color);
+    }
+}

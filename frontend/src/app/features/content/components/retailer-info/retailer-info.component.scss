@@ -1,0 +1,12 @@
+app-retailer-info {
+    display: block;
+}
+
+.app-retailer-info {
+    display: block;
+
+    .app-retailer-info__close-button {
+        position: absolute; top: 20px; right: -20px;
+        z-index: 100;
+    }
+}

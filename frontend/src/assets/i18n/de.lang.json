@@ -78,6 +78,9 @@
                     },
                     "TITLE": "Händler bearbeiten",
                     "FIELD": {
+                        "ADDITIONAL_CATEGORIES": {
+                            "LABEL": "zusätzliche Kategorien"
+                        },
                         "NAME": {
                             "LABEL": "Name"
                         },
@@ -104,6 +107,9 @@
                         },
                         "DESCRIPTION": {
                             "LABEL": "Beschreibung"
+                        },
+                        "MAIN_CATEGORY": {
+                            "LABEL": "Hauptkategorie"
                         },
                         "OFFER": {
                             "LABEL": "Angebot"
@@ -133,6 +139,9 @@
                     "GROUP": {
                         "ADDRESS": {
                             "TITLE": "Adresse"
+                        },
+                        "CATEGORIES": {
+                            "TITLE": "Kategorien"
                         },
                         "CONTACT": {
                             "TITLE": "Kontakt"
@@ -181,18 +190,20 @@
                                 "ORDER_TYPES": "Bestellarten",
                                 "PAYMENT_TYPES": "Zahlungsarten",
                                 "DELIVERY_AREAS": "Liefergebiete",
-                                "TAGS": "Tags"
+                                "TAGS": "Tags",
+                                "ADDITIONAL_CATEGORIES": "Weitere Kategorien"
                             }
                         }
                     }
                 },
-                "LIST": {
+                "OVERVIEW": {
                     "ACTION": {
                         "ADD": "Hinzufügen"
                     },
                     "COLUMN": {
                         "NAME": "Name",
-                        "EMAIL": "E-Mail"
+                        "EMAIL": "E-Mail",
+                        "MAIN_CATEGORY": "Hauptkategorie"
                     },
                     "TITLE": "Händler"
                 }

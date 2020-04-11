@@ -104,12 +104,8 @@ export namespace AuthHooks {
 
             const activeUser: IActiveUser = params.user;
 
-            if (!activeUser) {
-                if (throwIfNoUser) {
-                    throw new Forbidden('You do not have the correct permissions');
-                }
-
-                return;
+            if (!activeUser && throwIfNoUser) {
+                throw new Forbidden('You do not have the correct permissions');
             }
 
             const ability: Ability = PermissionUtils.getAbility(context);
@@ -144,12 +140,8 @@ export namespace AuthHooks {
 
             const activeUser: IActiveUser = params.user;
 
-            if (!activeUser) {
-                if (throwIfNoUser) {
-                    throw new Forbidden('You do not have the correct permissions');
-                }
-
-                return;
+            if (!activeUser && throwIfNoUser) {
+                throw new Forbidden('You do not have the correct permissions');
             }
 
             const ability: Ability = PermissionUtils.getAbility(context);
@@ -171,7 +163,7 @@ export namespace AuthHooks {
             const { id, service, path } = context;
 
             // assuming the service is a mongoose service!!
-            const properties = Object.keys(_get(service, 'Model.schema.paths'));
+            const properties = service.fields || Object.keys(_get(service, 'Model.schema.paths'));
 
             if (!properties) {
                 return;

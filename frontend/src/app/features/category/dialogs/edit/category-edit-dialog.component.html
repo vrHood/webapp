@@ -15,8 +15,8 @@
 
 <form *ngIf="mode === 'create' || mode === 'edit'" [formGroup]="form" (submit)="onSubmit()">
     <div class="icon-preview">
-        <mat-icon *ngIf="form.get('icon').value as iconName; else noIconName" fontSet="material-icons-outlined">{{ iconName }}</mat-icon>
-        <ng-template #noIconName>Vorschau</ng-template>
+        <mat-icon *ngIf="form.get('icon').value as icon; else noIconTemplate" style="color: {{form.get('color').value}}" [svgIcon]="icon | iconName"></mat-icon>
+        <ng-template #noIconTemplate>Vorschau</ng-template>
     </div>
     <mat-form-field appearance="outline">
         <mat-label>Icon</mat-label>
@@ -24,14 +24,19 @@
     </mat-form-field>
 
     <mat-autocomplete #iconNameAutoComplete="matAutocomplete">
-        <mat-option *ngFor="let iconName of (filteredIconNames$ | async)" [value]="iconName">
-            <mat-icon fontSet="material-icons-outlined">{{iconName}}</mat-icon>
-            {{iconName}}</mat-option>
+        <mat-option *ngFor="let icon of (filteredIcons$ | async)" [value]="icon">
+            <mat-icon [svgIcon]="icon | iconName"></mat-icon>
+            {{icon}}</mat-option>
     </mat-autocomplete>
 
     <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
         <input matInput type="text" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Farbe</mat-label>
+        <input matInput type="text" formControlName="color">
     </mat-form-field>
 
     <div class="app-category-edit-dialog__actions">

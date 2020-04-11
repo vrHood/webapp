@@ -17,7 +17,7 @@ import { CategoryEditDialogComponent, CategoryEditMode } from '../../dialogs/edi
 })
 export class CategoryListPage implements OnInit {
 
-    displayedColumns = [ 'icon', 'icon-name', 'name', 'active', 'edit', 'delete' ];
+    displayedColumns = [ 'icon', 'color', 'name', 'active', 'edit', 'delete' ];
 
     constructor(readonly categoryService: CategoryService,
                 private readonly _matDialog: MatDialog,

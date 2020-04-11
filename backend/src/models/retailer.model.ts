@@ -9,7 +9,7 @@ export default function (app: Application) {
     const { Schema } = mongooseClient;
 
     const locationSchema = new Schema({
-        name: { type: String },
+        street: { type: String },
         houseNumber: { type: Number },
         additionalAddress: { type: String },
         zip: { type: String },
@@ -21,8 +21,8 @@ export default function (app: Application) {
     const retailerSchema = new Schema<IRetailer>({
         name: { type: String, required: true },
         location: { type: locationSchema },
-        mainCategory: { type: Schema.Types.ObjectId, ref: ModelName.CATEGORY },
-        additionalCategories: [ { type: Schema.Types.ObjectId, ref: ModelName.CATEGORY } ],
+        mainCategoryId: { type: Schema.Types.ObjectId, ref: ModelName.CATEGORY },
+        additionalCategoryIds: [ { type: Schema.Types.ObjectId, ref: ModelName.CATEGORY } ],
         tags: [ { type: String } ],
         email: { type: String },
         phone: { type: String },

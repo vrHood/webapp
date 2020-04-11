@@ -1,0 +1,86 @@
+@import "vrhood.variables";
+
+@font-face {
+  font-family: '#{$icomoon-font-family}';
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?vctlvo');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?vctlvo#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?vctlvo') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?vctlvo') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?vctlvo##{$icomoon-font-family}') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.vrhood-icon,
+[class^="vrhood-icon-"], [class*=" vrhood-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: '#{$icomoon-font-family}' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Enable Ligatures ================ */
+  letter-spacing: 0;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga" 1;
+  font-feature-settings: "liga";
+  -webkit-font-variant-ligatures: discretionary-ligatures;
+  font-variant-ligatures: discretionary-ligatures;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.vrhood-icon-plants {
+  &:before {
+    content: $vrhood-icon-plants;
+  }
+}
+.vrhood-icon-clothes {
+  &:before {
+    content: $vrhood-icon-clothes;
+  }
+}
+.vrhood-icon-food {
+  &:before {
+    content: $vrhood-icon-food;
+  }
+}
+.vrhood-icon-help {
+  &:before {
+    content: $vrhood-icon-help;
+  }
+}
+.vrhood-icon-other {
+  &:before {
+    content: $vrhood-icon-other;
+  }
+}
+.vrhood-icon-interior {
+  &:before {
+    content: $vrhood-icon-interior;
+  }
+}
+.vrhood-icon-health {
+  &:before {
+    content: $vrhood-icon-health;
+  }
+}
+.vrhood-icon-craft {
+  &:before {
+    content: $vrhood-icon-craft;
+  }
+}
+.vrhood-icon-books {
+  &:before {
+    content: $vrhood-icon-books;
+  }
+}
+

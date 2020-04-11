@@ -1,0 +1,18 @@
+app-category-list {
+    display: block;
+}
+
+.app-category-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    app-category-list-item.app-category-list__item {
+        transform: translateX(240px);
+        transition: all 300ms ease;
+
+        &:hover {
+            transform: translateX(0);
+        }
+    }
+}

@@ -4,8 +4,10 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { ICategory } from '@vrhood/shared';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { Icon } from '../../../../models/icon.model';
 
 import { CategoryService } from '../../../../services/category.service';
+import { IconUtils } from '../../../../utils/icon.utils';
 import { MATERIAL_ICON_NAMES } from '../../data/icon-names';
 
 export enum CategoryEditMode {
@@ -42,8 +44,8 @@ export class CategoryEditDialogComponent implements OnInit {
         );
     }
 
-    readonly iconNames = MATERIAL_ICON_NAMES;
-    filteredIconNames$: Observable<string[]>;
+    readonly allIcons = IconUtils.ALL_ICONS;
+    filteredIcons$: Observable<Icon[]>;
 
     isSaving: boolean;
     mode: CategoryEditMode;
@@ -114,13 +116,15 @@ export class CategoryEditDialogComponent implements OnInit {
             case CategoryEditMode.CREATE:
                 this.form = new FormGroup({
                     icon: new FormControl(null, [ Validators.required ]),
-                    name: new FormControl(null, [ Validators.required ])
+                    name: new FormControl(null, [ Validators.required ]),
+                    color: new FormControl(null, [ Validators.required ])
                 });
                 break;
             case CategoryEditMode.EDIT:
                 this.form = new FormGroup({
                     icon: new FormControl(this.category.icon, [ Validators.required ]),
-                    name: new FormControl(this.category.name, [ Validators.required ])
+                    name: new FormControl(this.category.name, [ Validators.required ]),
+                    color: new FormControl(this.category.color, [ Validators.required ])
                 });
                 break;
         }
@@ -128,21 +132,21 @@ export class CategoryEditDialogComponent implements OnInit {
         if (this.form != null) {
             const iconFormControl = this.form.get('icon');
 
-            this.filteredIconNames$ = iconFormControl.valueChanges
+            this.filteredIcons$ = iconFormControl.valueChanges
                 .pipe(
                     startWith<string>(iconFormControl.value as string),
-                    map(value => this._filterIconNames(value))
+                    map(value => this._filterIcons(value))
                 );
         }
     }
 
-    private _filterIconNames(value: string): string[] {
+    private _filterIcons(value: string): Icon[] {
         if (!value) {
-            return this.iconNames;
+            return this.allIcons;
         }
 
         const filterValue = value.toLowerCase();
 
-        return this.iconNames.filter(option => option.toLowerCase().includes(filterValue));
+        return this.allIcons.filter(option => option.toLowerCase().includes(filterValue));
     }
 }

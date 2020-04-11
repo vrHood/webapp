@@ -3,7 +3,7 @@ app-page-layout-header {
 }
 
 .app-page-layout-header {
-    align-items: center;
+    align-items: start;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -14,7 +14,7 @@ app-page-layout-header {
         font-weight: 100;
         font-size: 3rem;
         color: rgba(0, 0, 0, 0.6);
-        margin-bottom: 0;
+        margin-bottom: 16px;
 
     }
 
@@ -23,6 +23,7 @@ app-page-layout-header {
     }
 
     .app-page-layout-header__actions {
+        margin-top: 10px;
 
         .app-page-layout-header__action {
             margin-left: 16px;

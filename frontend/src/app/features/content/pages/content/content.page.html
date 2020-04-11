@@ -12,22 +12,26 @@
 
     <mat-sidenav-content>
 
-        <div class="app-content-page__logo">
-            <img src="../assets/images/vrhood-logo-white.svg"/>
+        <div class="app-content-page__map placeholder">
+            <app-map (retailerClick)="showRetailerInfo($event)" [activeRetailer]="activeRetailer$ | async" [selectedCategories]="selectedCategories"></app-map>
         </div>
 
         <router-outlet></router-outlet>
 
-        <div class="app-content-page__map placeholder">
-            Map
+
+        <app-retailer-info *ngIf="(activeRetailer$ | async) as activeRetailer" [retailer]="activeRetailer"
+                           class="app-content-page__retailer">
+            <button mat-mini-fab appRetailerInfoCloseButton color="primary" (click)="hideRetailerInfo()"><mat-icon>close</mat-icon></button>
+        </app-retailer-info>
+
+        <div class="app-content-page__logo">
+            <img src="../assets/images/vrhood-logo-white.svg"/>
         </div>
 
+        <div class="app-content-page__categories placeholder">
+            <app-category-list (selectedCategoriesChange)="onSelectedCategoriesChanged($event)"></app-category-list>
+        </div>
     </mat-sidenav-content>
 
-    <mat-sidenav mode="side" position="end" opened>
-        <div class="app-content-page__categories placeholder">
-            Categories
-        </div>
-    </mat-sidenav>
 
 </mat-sidenav-container>

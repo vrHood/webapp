@@ -1,8 +1,10 @@
-import { iff, iffElse, isNot, isProvider } from 'feathers-hooks-common';
+import { iff, isProvider, paramsFromClient } from 'feathers-hooks-common';
+import { get as _get } from 'lodash';
 
 import { AuthHooks } from '../../hooks/auth.hooks';
-import { CommonHooks } from '../../hooks/common.hooks';
 import { Provider } from '../../types/provider';
+
+import { RetailerHooks } from './hooks/retailer-hooks';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default {
@@ -11,8 +13,11 @@ export default {
             AuthHooks.tryAuthenticate('jwt'),
             iff(
                 isProvider(Provider.EXTERNAL),
-                AuthHooks.checkPermissions()
-            )
+                (context) => console.log(`${context.type} ${context.method}, ${context.path} query before permissions`, context.params.query),
+                AuthHooks.checkPermissions(),
+                (context) => console.log(`${context.type} ${context.method}, ${context.path} query after permissions`, context.params.query)
+            ),
+            paramsFromClient('fastJoin')
         ],
         find: [],
         get: [],
@@ -23,18 +28,71 @@ export default {
     },
 
     after: {
-        all: [
+        all: [],
+        find: [
+            RetailerHooks.fastJoin((context) => {
+                return _get(context, 'params.fastJoin', {
+                    mainCategory: [ true ]
+                })
+            }),
             iff(
                 isProvider(Provider.EXTERNAL),
                 AuthHooks.protectFields()
             )
         ],
-        find: [],
-        get: [],
-        create: [],
-        update: [],
-        patch: [],
-        remove: []
+        get: [
+            RetailerHooks.fastJoin((context) => {
+                return _get(context, 'params.fastJoin', {
+                    mainCategory: [ true ],
+                    additionalCategories: [ [ true ] ]
+                })
+            }),
+            iff(
+                isProvider(Provider.EXTERNAL),
+                AuthHooks.protectFields()
+            )
+        ],
+        create: [
+            RetailerHooks.fastJoin((context) => {
+                return _get(context, 'params.fastJoin', {
+                    mainCategory: [ true ]
+                })
+            }),
+            iff(
+                isProvider(Provider.EXTERNAL),
+                AuthHooks.protectFields()
+            )
+        ],
+        update: [
+
+            RetailerHooks.fastJoin((context) => {
+                return _get(context, 'params.fastJoin', {
+                    mainCategory: [ true ]
+                })
+            }),
+            iff(
+                isProvider(Provider.EXTERNAL),
+                AuthHooks.protectFields()
+            )
+        ],
+        patch: [
+
+            RetailerHooks.fastJoin((context) => {
+                return _get(context, 'params.fastJoin', {
+                    mainCategory: [ true ]
+                })
+            }),
+            iff(
+                isProvider(Provider.EXTERNAL),
+                AuthHooks.protectFields()
+            )
+        ],
+        remove: [
+            iff(
+                isProvider(Provider.EXTERNAL),
+                AuthHooks.protectFields()
+            )
+        ]
     },
 
     error: {

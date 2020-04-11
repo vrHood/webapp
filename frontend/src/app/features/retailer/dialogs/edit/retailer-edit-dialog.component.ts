@@ -1,11 +1,14 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { TinyColor } from '@ctrl/tinycolor';
+import { Paginated } from '@feathersjs/feathers';
 import {
     DELIVERY_AREA_SELECT_VALUES,
     DELIVERY_AREA_TRANSLATE_VALUES,
-    DeliveryArea,
+    DeliveryArea, ICategory, IPopulatedRetailer,
     IRetailer,
     ORDER_TYPE_SELECT_VALUES,
     ORDER_TYPE_TRANSLATE_VALUES,
@@ -16,9 +19,13 @@ import {
     SelectValues,
     TranslateValues
 } from '@vrhood/shared';
-import { includes as _includes, pull as _pull } from 'lodash';
+import { includes as _includes, pull as _pull, get as _get } from 'lodash';
+import { Observable } from 'rxjs';
+import { first, map } from 'rxjs/operators';
 
+import { CategoryService } from '../../../../services/category.service';
 import { RetailerService } from '../../../../services/retailer.service';
+import { DefaultErrorStateMatcher } from '../../../../utils/default-error-step-matcher';
 
 export enum RetailerEditMode {
     CREATE = 'create',
@@ -63,18 +70,31 @@ export class RetailerEditDialogComponent implements OnInit {
     readonly paymentTypeLabels: TranslateValues<PaymentType> = PAYMENT_TYPE_TRANSLATE_VALUES;
     readonly deliveryAreaLabels: TranslateValues<DeliveryArea> = DELIVERY_AREA_TRANSLATE_VALUES;
 
+    readonly categories$: Observable<ICategory[]>;
+
+    readonly errorStateMatcher: ErrorStateMatcher = new DefaultErrorStateMatcher();
+
     isSaving: boolean;
     mode: RetailerEditMode;
-    retailer?: IRetailer;
+    retailer?: IPopulatedRetailer;
 
     form: FormGroup;
 
     constructor(@Inject(MAT_DIALOG_DATA) data: RetailerEditDialogData,
                 readonly changeDetector: ChangeDetectorRef,
                 private readonly _retailerService: RetailerService,
+                private readonly _categoryService: CategoryService,
                 private readonly _dialogRef: MatDialogRef<RetailerEditDialogComponent>) {
         this.mode = data.mode;
         this.retailer = data.retailer;
+
+        this.categories$ = _categoryService.find()
+            .pipe(
+                // @ts-ignore
+                map((result: ICategory[] | Paginated<ICategory>) => {
+                    return Array.isArray(result) ? result : result.data;
+                })
+            );
     }
 
     get hasOtherOrderType() {
@@ -94,8 +114,36 @@ export class RetailerEditDialogComponent implements OnInit {
 
     ngOnInit() {
 
-        this._initForm();
+        this._retailerService.get(this.retailer._id)
+            .pipe(first())
+            .subscribe((retailer: IPopulatedRetailer) => {
+                this.retailer = retailer;
+                this.form.get('mainCategory').setValue(retailer.mainCategory);
+                this.form.get('additionalCategories').setValue(retailer.additionalCategories);
+                this.changeDetector.detectChanges();
+            });
 
+        this._initForm();
+        console.log('RetailerEditDialogComponent retailer', this.retailer);
+        console.log('RetailerEditDialogComponent form', this.form);
+        this.changeDetector.detectChanges();
+    }
+
+    compareCategories(o1: ICategory, o2: ICategory): boolean {
+        return o1 != null && o2 != null && o1._id === o2._id;
+    }
+    getContrastColor(color: string) {
+        return (!color || new TinyColor(color).isLight()) ? 'rgba(0, 0, 0, 0.87)' : 'white';
+    }
+
+    getFormControl(...path: string[]): FormControl {
+        const control = this.form.get(path);
+        return control && control instanceof FormControl ? control : null;
+    }
+
+    getFormGroup(...path: string[]): FormGroup {
+        const group = this.form.get(path);
+        return group && group instanceof FormGroup ? group : null;
     }
 
     removeSelectValue(formControlName: string, value: any) {
@@ -131,7 +179,9 @@ export class RetailerEditDialogComponent implements OnInit {
         const formData = this.form.value;
 
         const requestData: Partial<IRetailer> = {
-            ...formData
+            ...formData,
+            mainCategoryId: formData.mainCategory ? formData.mainCategory._id : null,
+            additionalCategoryIds: formData.additionalCategories ? formData.additionalCategories.map((category) => category._id) : null,
         };
 
         this.isSaving = true;
@@ -167,6 +217,16 @@ export class RetailerEditDialogComponent implements OnInit {
             case RetailerEditMode.CREATE:
                 this.form = new FormGroup({
                     name: new FormControl(null, [ Validators.required ]),
+                    mainCategory: new FormControl(null, [ Validators.required ]),
+                    additionalCategories: new FormControl(),
+                    location: new FormGroup({
+                        street: new FormControl(null, [ Validators.required ]),
+                        houseNumber: new FormControl(null, [ Validators.required ]),
+                        zip: new FormControl(null, [ Validators.required ]),
+                        city: new FormControl(null, [ Validators.required ]),
+                        latitude: new FormControl(null, [ Validators.required ]),
+                        longitude: new FormControl(null, [ Validators.required ]),
+                    }),
                     website: new FormControl(),
                     facebook: new FormControl(),
                     instagram: new FormControl(),
@@ -185,8 +245,21 @@ export class RetailerEditDialogComponent implements OnInit {
                 });
                 return;
             case RetailerEditMode.EDIT:
+                const mainCategory = this.retailer.mainCategory ? this.retailer.mainCategory : { _id: this.retailer.mainCategoryId };
+                const additionalCategories = this.retailer.additionalCategories ? this.retailer.additionalCategories : this.retailer.additionalCategoryIds.map((id) => ({ _id: id }));
+
                 this.form = new FormGroup({
                     name: new FormControl(this.retailer.name, [ Validators.required ]),
+                    mainCategory: new FormControl(mainCategory, [ Validators.required ]),
+                    additionalCategories: new FormControl(additionalCategories),
+                    location: new FormGroup({
+                        street: new FormControl(_get(this.retailer, 'location.street'), [ Validators.required ]),
+                        houseNumber: new FormControl(_get(this.retailer, 'location.houseNumber'), [ Validators.required ]),
+                        zip: new FormControl(_get(this.retailer, 'location.zip'), [ Validators.required ]),
+                        city: new FormControl(_get(this.retailer, 'location.city'), [ Validators.required ]),
+                        latitude: new FormControl(_get(this.retailer, 'location.latitude'), [ Validators.required ]),
+                        longitude: new FormControl(_get(this.retailer, 'location.longitude'), [ Validators.required ]),
+                    }),
                     website: new FormControl(this.retailer.website),
                     facebook: new FormControl(this.retailer.facebook),
                     instagram: new FormControl(this.retailer.instagram),
@@ -205,5 +278,6 @@ export class RetailerEditDialogComponent implements OnInit {
                 });
                 return;
         }
+
     }
 }

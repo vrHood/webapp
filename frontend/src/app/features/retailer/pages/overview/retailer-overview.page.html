@@ -1,11 +1,11 @@
 <app-page-layout>
 
     <app-page-layout-header>
-        <h1 appPageLayoutHeaderTitle>{{ 'FEATURES.RETAILER.PAGES.LIST.TITLE' | translate }}</h1>
+        <h1 appPageLayoutHeaderTitle>{{ 'FEATURES.RETAILER.PAGES.OVERVIEW.TITLE' | translate }}</h1>
 
         <button mat-button mat-stroked-button appPageLayoutHeaderAction color="primary" (click)="addRetailer()">
             <mat-icon>add</mat-icon>
-            {{ 'FEATURES.RETAILER.PAGES.LIST.ACTION.ADD' | translate }}
+            {{ 'FEATURES.RETAILER.PAGES.OVERVIEW.ACTION.ADD' | translate }}
         </button>
     </app-page-layout-header>
 
@@ -15,14 +15,19 @@
             <ng-content></ng-content>
 
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>{{ 'FEATURES.RETAILER.PAGES.LIST.COLUMN.NAME' | translate }}</th>
+                <th mat-header-cell *matHeaderCellDef>{{ 'FEATURES.RETAILER.PAGES.OVERVIEW.COLUMN.NAME' | translate }}</th>
                 <td mat-cell *matCellDef="let element">{{element.name}}</td>
             </ng-container>
 
             <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef>{{ 'FEATURES.RETAILER.PAGES.LIST.COLUMN.EMAIL' | translate }}</th>
+                <th mat-header-cell *matHeaderCellDef>{{ 'FEATURES.RETAILER.PAGES.OVERVIEW.COLUMN.EMAIL' | translate }}</th>
                 <td mat-cell *matCellDef="let element"><a *ngIf="element?.email" href="mailto:{{element.email}}"
                                                           (click)="$event.stopPropagation()" target="_blank">{{element.email}}</a></td>
+            </ng-container>
+
+            <ng-container matColumnDef="mainCategory">
+                <th mat-header-cell *matHeaderCellDef>{{ 'FEATURES.RETAILER.PAGES.OVERVIEW.COLUMN.MAIN_CATEGORY' | translate }}</th>
+                <td mat-cell *matCellDef="let element"><app-category-badge  *ngIf="element?.mainCategoryId" [category]="element.mainCategoryId" [iconOnly]="true"></app-category-badge></td>
             </ng-container>
 
             <ng-container matColumnDef="active">
